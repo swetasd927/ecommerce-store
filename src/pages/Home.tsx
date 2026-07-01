@@ -1,5 +1,6 @@
 import { useProducts } from "../hooks/useProducts";
 import ProductGrid from "../components/product/ProductGrid";
+import ProductSkeletonGrid from "../components/product/ProductSkeletonGrid";
 
 function Home() {
   const {
@@ -9,7 +10,11 @@ function Home() {
   } = useProducts();
 
   if (isLoading) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="p-6">
+        <ProductSkeletonGrid />
+      </div>
+    )
   }
 
   if (error) {

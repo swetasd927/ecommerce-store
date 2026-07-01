@@ -8,3 +8,4 @@ export async function fetchProducts(): Promise<Product[]> {
 
   return response.data;
 }
+//instance axios, we call it once : see
