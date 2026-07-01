@@ -1,17 +1,31 @@
-import { cn } from "./lib/cn";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
 
 function App() {
-  const isActive = true;
   return (
-    <div 
-    className = {cn(
-      "p-10",
-      "text-4xl",
-      isActive && "text-blue-600"
-    )}
-    >
-      cn helper is working 
-    </div>
+    <BrowserRouter>
+      <Routes>
+
+        <Route
+          path="/"
+          element={<Home />}
+        />
+
+        <Route
+          path="/product/:id"
+          element={<ProductDetails />}
+        />
+
+        <Route
+          path="/cart"
+          element={<Cart />}
+        />
+
+      </Routes>
+    </BrowserRouter>
   );
 }
 
