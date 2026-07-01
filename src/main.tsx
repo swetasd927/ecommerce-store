@@ -1,10 +1,18 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import ReactDOM from "react-dom/client";
+import { QueryClient } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+import "./index.css";
+import App from "./App";
+
+const queryClient = new QueryClient();
+//creates react query cache manager
+
+ReactDOM.createRoot(
+  document.getElementById("root")!
+).render(
+  //wrap entire app
+  <QueryClientProvider client={queryClient}>
     <App />
-  </StrictMode>,
-)
+  </QueryClientProvider>
+);
