@@ -1,13 +1,22 @@
+import { useState } from "react";
 import { useProducts } from "../hooks/useProducts";
 import ProductGrid from "../components/product/ProductGrid";
 import ProductSkeletonGrid from "../components/product/ProductSkeletonGrid";
+import CategoryFilter from "../components/product/CategoryFilter";
+import { useCategories } from "../hooks/useCategories";
 
 function Home() {
+  
+  const [selectedCategory, setSelectedCategory] = useState("");
   const {
-    data,
+    data: products,
     isLoading,
     error,
   } = useProducts();
+
+    const {
+    data: categories,
+  } = useCategories();
 
   if (isLoading) {
     return (
@@ -21,6 +30,16 @@ function Home() {
     return <h1>Error loading products</h1>;
   }
 
+    const filteredProducts =
+    selectedCategory
+      ? products?.filter(
+          (product) =>
+            product.category ===
+            selectedCategory
+        )
+      : products;
+
+
   return (
     <div className="p-6">
 
@@ -28,8 +47,15 @@ function Home() {
         Products
       </h1>
 
+
+          <CategoryFilter
+        categories={categories ?? []}
+        selected={selectedCategory}
+        onSelect={setSelectedCategory}
+      />
        <ProductGrid
-        products={data ?? []}
+        products = {filteredProducts ?? []
+        }
       />
 
 
