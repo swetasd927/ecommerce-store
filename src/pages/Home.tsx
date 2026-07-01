@@ -1,4 +1,5 @@
 import { useProducts } from "../hooks/useProducts";
+import ProductGrid from "../components/product/ProductGrid";
 
 function Home() {
   const {
@@ -12,7 +13,7 @@ function Home() {
   }
 
   if (error) {
-    return <h1>Something went wrong</h1>;
+    return <h1>Error loading products</h1>;
   }
 
   return (
@@ -22,22 +23,10 @@ function Home() {
         Products
       </h1>
 
-      <div className="space-y-4">
-        {data?.map((product) => (
-          <div
-            key={product.id}
-            className="border p-4 rounded"
-          >
-            <h2>
-              {product.title}
-            </h2>
+       <ProductGrid
+        products={data ?? []}
+      />
 
-            <p>
-              ${product.price}
-            </p>
-          </div>
-        ))}
-      </div>
 
     </div>
   );
