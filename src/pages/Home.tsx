@@ -3,7 +3,7 @@ import { useState } from "react";
 import ProductGrid from "../components/product/ProductGrid";
 import ProductSkeletonGrid from "../components/product/ProductSkeletonGrid";
 import CategoryFilter from "../components/product/CategoryFilter";
-import { useProducts } from "../hooks/useProduct";
+import { useProducts } from "../hooks/useProducts";
 import { useCategories } from "../hooks/useCategories";
 
 function Home() {
