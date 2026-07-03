@@ -1,4 +1,5 @@
 import type { Product } from "../../types/product";
+import {Link} from "react-router-dom"; 
 
 type ProductCardProps = {
   product: Product;
@@ -8,11 +9,16 @@ function ProductCard({
   product,
 }: ProductCardProps) {
   return (
+    <Link 
+    to = {`/product/${product.id}`}
+    >
     <div
       className="
       border
       rounded-lg
       p-4
+      hover: shadow-lg
+      transition
       "
     >
       <img
@@ -44,6 +50,7 @@ function ProductCard({
         ${product.price}
       </p>
     </div>
+    </Link>
   );
 }
 

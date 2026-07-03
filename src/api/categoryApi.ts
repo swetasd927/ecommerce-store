@@ -1,9 +1,9 @@
-import axios from "axios";
+import { api } from "./axios";
 
 export async function fetchCategories(): Promise<string[]> {
-  const response = await axios.get(
-    "https://fakestoreapi.com/products/categories"
-  );
+  const response = await api.get(
+   "/products/categories"
+    );
 
   return response.data;
 }

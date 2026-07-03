@@ -3,8 +3,7 @@ import { useState } from "react";
 import ProductGrid from "../components/product/ProductGrid";
 import ProductSkeletonGrid from "../components/product/ProductSkeletonGrid";
 import CategoryFilter from "../components/product/CategoryFilter";
-
-import { useProducts } from "../hooks/useProducts";
+import { useProducts } from "../hooks/useProduct";
 import { useCategories } from "../hooks/useCategories";
 
 function Home() {
@@ -15,10 +14,10 @@ function Home() {
     useState(1);
 
   const {
-    data: products,
-    isLoading,
-    error,
-  } = useProducts();
+  data: products,
+  isLoading,
+  error,
+} = useProducts();
 
   const {
     data: categories,
