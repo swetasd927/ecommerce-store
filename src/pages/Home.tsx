@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 import ProductGrid from "../components/product/ProductGrid";
 import ProductSkeletonGrid from "../components/product/ProductSkeletonGrid";
@@ -7,21 +7,15 @@ import { useProducts } from "../hooks/useProducts";
 import { useCategories } from "../hooks/useCategories";
 
 function Home() {
-  const [selectedCategory, setSelectedCategory] =
-    useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const [currentPage, setCurrentPage] =
-    useState(1);
+  const selectedCategory = searchParams.get("category") ?? "";
 
-  const {
-  data: products,
-  isLoading,
-  error,
-} = useProducts();
+  const currentPage = Number(searchParams.get("page")) || 1;
 
-  const {
-    data: categories,
-  } = useCategories();
+  const { data: products, isLoading, error } = useProducts();
+
+  const { data: categories } = useCategories();
 
   if (isLoading) {
     return (
@@ -32,43 +26,28 @@ function Home() {
   }
 
   if (error) {
-    return (
-      <h1>
-        Error loading products
-      </h1>
-    );
+    return <h1>Error loading products</h1>;
   }
 
-  const filteredProducts =
-    selectedCategory
-      ? products?.filter(
-          (product) =>
-            product.category ===
-            selectedCategory
-        )
-      : products;
+  const filteredProducts = selectedCategory
+    ? products?.filter((product) => product.category === selectedCategory)
+    : products;
 
   const ITEMS_PER_PAGE = 6;
 
-  const totalPages =
-    Math.ceil(
-      (filteredProducts?.length ?? 0) /
-      ITEMS_PER_PAGE
-    );
+  const totalPages = Math.ceil(
+    (filteredProducts?.length ?? 0) / ITEMS_PER_PAGE,
+  );
 
-  const start =
-    (currentPage - 1) *
-    ITEMS_PER_PAGE;
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
 
-  const paginatedProducts =
-    filteredProducts?.slice(
-      start,
-      start + ITEMS_PER_PAGE
-    );
+  const paginatedProducts = filteredProducts?.slice(
+    start,
+    start + ITEMS_PER_PAGE,
+  );
 
   return (
     <div className="p-6">
-
       <h1
         className="
         text-3xl
@@ -83,16 +62,14 @@ function Home() {
         categories={categories ?? []}
         selected={selectedCategory}
         onSelect={(category) => {
-          setSelectedCategory(category);
-          setCurrentPage(1);
+          setSearchParams({
+            category,
+            page: "1",
+          });
         }}
       />
 
-      <ProductGrid
-        products={
-          paginatedProducts ?? []
-        }
-      />
+      <ProductGrid products={paginatedProducts ?? []} />
 
       <div
         className="
@@ -102,17 +79,16 @@ function Home() {
         flex-wrap
         "
       >
-
         {Array.from({
           length: totalPages,
         }).map((_, index) => (
-
           <button
             key={index}
             onClick={() =>
-              setCurrentPage(
-                index + 1
-              )
+              setSearchParams({
+                category: selectedCategory,
+                page: String(index + 1),
+              })
             }
             className={`
             px-4
@@ -120,21 +96,13 @@ function Home() {
             border
             rounded
 
-            ${
-              currentPage ===
-              index + 1
-                ? "bg-black text-white"
-                : ""
-            }
+            ${currentPage === index + 1 ? "bg-black text-white" : ""}
             `}
           >
             {index + 1}
           </button>
-
         ))}
-
       </div>
-
     </div>
   );
 }

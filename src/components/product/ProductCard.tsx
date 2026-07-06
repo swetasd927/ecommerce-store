@@ -9,9 +9,11 @@ function ProductCard({
   product,
 }: ProductCardProps) {
   return (
-    <Link 
-    to = {`/product/${product.id}`}
-    >
+    
+    <Link to={`/product/${product.id}`}>
+  View Product
+
+
     <div
       className="
       border
