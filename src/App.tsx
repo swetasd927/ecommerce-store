@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 
 import AuthProvider from "./context/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+import AppLayout from "./components/layout/AppLayout";
 
 function App() {
   return (
@@ -14,32 +15,19 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
 
+        {/* Navbar + Outlet: wraps all protected pages */}
+        
         <Route
-          path="/"
           element={
             <ProtectedRoute>
-              <Home />
+              <AppLayout />
             </ProtectedRoute>
           }
-        />
-
-        <Route
-          path="/product/:id"
-          element={
-            <ProtectedRoute>
-              <ProductDetails />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/cart"
-          element={
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          }
-        />
+        >
+          <Route path="/" element={<Home />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
+        </Route>
       </Routes>
     </AuthProvider>
   );
