@@ -13,16 +13,20 @@ function CartItem({ item }: CartItemProps) {
   const { product, quantity } = item;
 
   return (
-    <div className="flex items-center gap-4 border-b border-gray-200 py-4 last:border-b-0">
-      <img
-        src={product.image}
-        alt={product.title}
-        className="h-20 w-20 flex-shrink-0 object-contain"
-      />
+    <div className="flex items-center gap-4 border-b border-gray-100 py-5 last:border-b-0">
+      <div className="flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-lg border border-gray-100 bg-white p-2">
+        <img
+          src={product.image}
+          alt={product.title}
+          className="h-full w-full object-contain"
+        />
+      </div>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate font-medium text-gray-800">{product.title}</p>
-        <p className="text-sm text-gray-500">${product.price.toFixed(2)}</p>
+        <p className="line-clamp-2 text-sm font-medium text-ink-900">
+          {product.title}
+        </p>
+        <p className="mt-1 text-sm text-ink-600">${product.price.toFixed(2)}</p>
       </div>
 
       <InputNumber
@@ -33,14 +37,13 @@ function CartItem({ item }: CartItemProps) {
         aria-label={`Quantity for ${product.title}`}
       />
 
-      <p className="w-20 flex-shrink-0 text-right font-semibold">
+      <p className="w-20 flex-shrink-0 text-right font-semibold text-ink-900">
         ${(product.price * quantity).toFixed(2)}
       </p>
 
       <Button
-        danger
         type="text"
-        icon={<DeleteOutlined />}
+        icon={<DeleteOutlined className="text-ink-400 hover:text-accent-600" />}
         onClick={() => removeItem(product.id)}
         aria-label={`Remove ${product.title} from cart`}
       />

@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 
 import AuthProvider from "./context/AuthContext";
 import CartProvider from "./context/CartContext";
+import ThemeProvider from "./context/ThemeContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 import PublicOnlyRoute from "./components/auth/PublicOnlyRoute";
@@ -14,36 +15,37 @@ import AppLayout from "./components/layout/AppLayout";
 
 function App() {
   return (
-    <CartProvider>
-      <AuthProvider>
-        <Routes>
-          <Route
-            path="/login"
-            element={
-              <PublicOnlyRoute>
-                <Login />
-              </PublicOnlyRoute>
-            }
-          />
+    <ThemeProvider>
+      <CartProvider>
+        <AuthProvider>
+          <Routes>
+            <Route
+              path="/login"
+              element={
+                <PublicOnlyRoute>
+                  <Login />
+                </PublicOnlyRoute>
+              }
+            />
 
-          {/*
-            All protected pages render inside AppLayout (Navbar + Outlet).
-           
-          */}
-          <Route
-            element={
-              <ProtectedRoute>
-                <AppLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route path="/" element={<Home />} />
-            <Route path="/product/:id" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart />} />
-          </Route>
-        </Routes>
-      </AuthProvider>
-    </CartProvider>
+            {/*
+              All protected pages render inside AppLayout (Navbar + Outlet).
+            */}
+            <Route
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route path="/" element={<Home />} />
+              <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/cart" element={<Cart />} />
+            </Route>
+          </Routes>
+        </AuthProvider>
+      </CartProvider>
+    </ThemeProvider>
   );
 }
 
