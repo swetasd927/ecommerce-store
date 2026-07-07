@@ -1,4 +1,4 @@
-import type { Product } from "../../types/product";
+import type { Product } from "../../types/Product";
 import {Link} from "react-router-dom"; 
 
 type ProductCardProps = {
@@ -9,9 +9,11 @@ function ProductCard({
   product,
 }: ProductCardProps) {
   return (
-    <Link 
-    to = {`/product/${product.id}`}
-    >
+    
+    <Link to={`/product/${product.id}`}>
+  View Product
+
+
     <div
       className="
       border
