@@ -1,53 +1,47 @@
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-// import Home from "./pages/Home";
-// import ProductDetails from "./pages/ProductDetails";
-// import Cart from "./pages/Cart";
-
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-
-//         <Route
-//           path="/"
-//           element={<Home />}
-//         />
-
-//         <Route
-//           path="/product/:id"
-//           element={<ProductDetails />}
-//         />
-
-//         <Route
-//           path="/cart"
-//           element={<Cart />}
-//         />
-
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }
-
-// export default App;
-
-
 import { Routes, Route } from "react-router-dom";
 
-import Login from "./pages/Login";
 import Home from "./pages/Home";
 import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
+import Login from "./pages/Login";
+
+import AuthProvider from "./context/AuthContext";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/home" element={<Home />} />
-      <Route
-        path="/product/:id"
-        element={<ProductDetails />}
-      />
-    </Routes>
+    <AuthProvider>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/product/:id"
+          element={
+            <ProtectedRoute>
+              <ProductDetails />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/cart"
+          element={
+            <ProtectedRoute>
+              <Cart />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </AuthProvider>
   );
 }
 
