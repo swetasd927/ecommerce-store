@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Drawer, Avatar, Dropdown } from "antd";
+import { Button, Drawer, Avatar, Dropdown, Badge } from "antd";
 import type { MenuProps } from "antd";
 import {
   ShoppingCartOutlined,
@@ -10,6 +10,7 @@ import {
 } from "@ant-design/icons";
 
 import { useAuth } from "../../hooks/useAuth";
+import { useCart } from "../../hooks/useCart";
 import { cn } from "../../lib/cn";
 
 interface NavLinkItem {
@@ -24,6 +25,7 @@ const NAV_LINKS: NavLinkItem[] = [
 
 function Navbar() {
   const { user, logout } = useAuth();
+  const { totalItems } = useCart();
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -63,7 +65,13 @@ function Navbar() {
                 "text-sm font-medium text-gray-700 transition-colors hover:text-blue-600",
               )}
             >
-              {link.label}
+              {link.to === "/cart" ? (
+                <Badge count={totalItems} size="small" offset={[8, 0]}>
+                  {link.label}
+                </Badge>
+              ) : (
+                link.label
+              )}
             </Link>
           ))}
         </div>
@@ -119,7 +127,13 @@ function Navbar() {
               onClick={() => setMobileOpen(false)}
               className="rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
             >
-              {link.label}
+              {link.to === "/cart" ? (
+                <Badge count={totalItems} size="small" offset={[8, 0]}>
+                  {link.label}
+                </Badge>
+              ) : (
+                link.label
+              )}
             </Link>
           ))}
 

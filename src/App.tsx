@@ -6,30 +6,44 @@ import Cart from "./pages/Cart";
 import Login from "./pages/Login";
 
 import AuthProvider from "./context/AuthContext";
+import CartProvider from "./context/CartContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
+
+import PublicOnlyRoute from "./components/auth/PublicOnlyRoute";
 import AppLayout from "./components/layout/AppLayout";
 
 function App() {
   return (
-    <AuthProvider>
-      <Routes>
-        <Route path="/login" element={<Login />} />
+    <CartProvider>
+      <AuthProvider>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              <PublicOnlyRoute>
+                <Login />
+              </PublicOnlyRoute>
+            }
+          />
 
-        {/* Navbar + Outlet: wraps all protected pages */}
-        
-        <Route
-          element={
-            <ProtectedRoute>
-              <AppLayout />
-            </ProtectedRoute>
-          }
-        >
-          <Route path="/" element={<Home />} />
-          <Route path="/product/:id" element={<ProductDetails />} />
-          <Route path="/cart" element={<Cart />} />
-        </Route>
-      </Routes>
-    </AuthProvider>
+          {/*
+            All protected pages render inside AppLayout (Navbar + Outlet).
+           
+          */}
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route path="/" element={<Home />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
+    </CartProvider>
   );
 }
 
