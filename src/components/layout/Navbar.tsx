@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button, Drawer, Avatar, Dropdown, Badge, Input } from "antd";
 import type { MenuProps } from "antd";
@@ -40,13 +40,17 @@ function Navbar() {
 
   const initialQuery = new URLSearchParams(location.search).get("q") ?? "";
   const [query, setQuery] = useState(initialQuery);
+  const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Debounced push of the search term into the URL. Home reads `q` from
-  // the URL and filters products by title, so the store owns the search
-  // state rather than duplicating it in local component state.
-  useEffect(() => {
-    const trimmed = query.trim();
-    const timer = setTimeout(() => {
+  const handleSearchChange = (value: string) => {
+    setQuery(value);
+
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current);
+    }
+
+    searchTimeoutRef.current = setTimeout(() => {
+      const trimmed = value.trim();
       const params = new URLSearchParams(
         location.pathname === "/" ? location.search : "",
       );
@@ -58,12 +62,16 @@ function Navbar() {
       }
 
       navigate({ pathname: "/", search: params.toString() }, { replace: true });
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, SEARCH_DEBOUNCE_MS);
+  };
 
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
+  useEffect(() => {
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleLogout = () => {
     logout();
@@ -97,7 +105,7 @@ function Navbar() {
         <div className="hidden max-w-md flex-1 md:block">
           <Input
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={(e) => handleSearchChange(e.target.value)}
             placeholder="Search for products, brands and more"
             prefix={<SearchOutlined className="text-gray-400" />}
             allowClear
@@ -170,7 +178,7 @@ function Navbar() {
       <div className="border-t border-gray-100 px-4 py-2 dark:border-gray-800 md:hidden">
         <Input
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => handleSearchChange(e.target.value)}
           placeholder="Search products"
           prefix={<SearchOutlined className="text-gray-400" />}
           allowClear

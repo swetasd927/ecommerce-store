@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Empty } from "antd";
 import { ArrowLeftOutlined } from "@ant-design/icons";
 
@@ -7,6 +7,7 @@ import CartItem from "../components/cart/cartItem";
 
 function Cart() {
   const { items, totalItems, totalPrice, clearCart } = useCart();
+  const navigate = useNavigate();
 
   if (items.length === 0) {
     return (
@@ -23,7 +24,7 @@ function Cart() {
 
   return (
     <div className="mx-auto max-w-6xl p-4 sm:p-6">
-      <h1 className="font-display mb-6 text-2xl font-extrabold text-ink-900 sm:text-3xl">
+      <h1 className="font-display mb-6 text-2xl font-extrabold text-ink-900 sm:text-3xl  dark:text-ink-dark">
         Your Cart
       </h1>
 
@@ -59,8 +60,10 @@ function Cart() {
               <span>${totalPrice.toFixed(2)}</span>
             </div>
 
-            <Button type="primary" size="large" block disabled className="mt-5">
-              Checkout (coming soon)
+            <Button type="primary" size="large" block className="mt-5"
+              onClick={() => navigate("/checkout")}
+            >
+              Checkout
             </Button>
 
             <Button block className="mt-2" onClick={clearCart}>

@@ -1,7 +1,8 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import type { Product } from "../types/Product";
 import type { CartContextType, CartItem } from "../types/Cart";
+import { createCart, updateCart } from "../api/CartApi";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const CartContext = createContext<CartContextType | undefined>(
@@ -20,15 +21,33 @@ function readStoredCart(): CartItem[] {
 }
 
 function CartProvider({ children }: { children: ReactNode }) {
+  // localStorage is the real source of truth - read synchronously so the
+  // cart is already there on first paint, even on a hard refresh.
   const [items, setItems] = useState<CartItem[]>(() => readStoredCart());
 
-  // Keep localStorage in sync whenever the cart changes.
+  // In-memory only. FakeStoreAPI doesn't really persist writes server-side
+  // anyway, so there's no point saving this across refreshes - each session
+  // just creates one cart on the API and reuses its id for the rest of the
+  // session.
+  const apiCartId = useRef<number | null>(null);
+
   useEffect(() => {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+
+    // Best-effort mirror to FakeStoreAPI so the app is actually using the
+    // Carts endpoint. Fire-and-forget: if it fails, the cart on screen is
+    // unaffected because localStorage already has the real data.
+    const sync = apiCartId.current
+      ? updateCart(apiCartId.current, items)
+      : createCart(items).then((cart) => {
+          apiCartId.current = cart.id;
+        });
+
+    sync.catch(() => {
+      // Ignored on purpose - see comment above.
+    });
   }, [items]);
 
-  // All updates below are synchronous local state changes only -
-  // there is no async call to wait on, so the UI is optimistic by default.
   const addItem = (product: Product, quantity = 1) => {
     setItems((prev) => {
       const existing = prev.find((item) => item.product.id === product.id);
