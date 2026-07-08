@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button, Drawer, Avatar, Dropdown, Badge, Input } from "antd";
-import type { MenuProps } from "antd";
+import { Button, Drawer, Avatar, Badge, Input } from "antd";
 import {
   ShoppingCartOutlined,
   UserOutlined,
@@ -14,7 +13,6 @@ import {
 
 import { useAuth } from "../../hooks/useAuth";
 import { useCart } from "../../hooks/useCart";
-
 import { useTheme } from "../../hooks/useTheme";
 import { cn } from "../../lib/cn";
 
@@ -78,21 +76,12 @@ function Navbar() {
     navigate("/login", { replace: true });
   };
 
-  const userMenuItems: MenuProps["items"] = [
-    {
-      key: "logout",
-      label: "Logout",
-      icon: <LogoutOutlined />,
-      onClick: handleLogout,
-    },
-  ];
-
   const isActive = (to: string) => location.pathname === to;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur dark:border-gray-800 dark:bg-gray-900/95">
-      <nav className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
-        {/* Logo / title */}
+    <header className="surface-header border-surface sticky top-0 z-50 border-b backdrop-blur">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6 lg:px-8">
+        {/* Left: logo, pinned to the far left */}
         <Link
           to="/"
           className="flex flex-shrink-0 items-center gap-2 font-display text-lg font-extrabold text-brand-600 hover:text-brand-700"
@@ -101,22 +90,24 @@ function Navbar() {
           <span>E-Shop</span>
         </Link>
 
-        {/* Search bar */}
-        <div className="hidden max-w-md flex-1 md:block">
-          <Input
-            value={query}
-            onChange={(e) => handleSearchChange(e.target.value)}
-            placeholder="Search for products, brands and more"
-            prefix={<SearchOutlined className="text-gray-400" />}
-            allowClear
-            className="!rounded-full"
-          />
+        {/* Center: search bar, grows to fill the space between logo and nav */}
+        <div className="hidden flex-1 justify-center px-8 md:flex">
+          <div className="w-full max-w-md">
+            <Input
+              value={query}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              placeholder="Search for products, brands and more"
+              prefix={<SearchOutlined className="text-gray-400" />}
+              allowClear
+              className="!rounded-full"
+            />
+          </div>
         </div>
 
         <div className="flex-1 md:hidden" />
 
-        {/* Desktop nav links */}
-        <div className="hidden items-center gap-2 md:flex">
+        {/* Right: nav links, theme toggle, account, logout - grouped and pinned right */}
+        <div className="hidden flex-shrink-0 items-center gap-1 md:flex">
           {NAV_LINKS.map((link) => (
             <Link
               key={link.to}
@@ -124,8 +115,8 @@ function Navbar() {
               className={cn(
                 "rounded-full px-3 py-1.5 text-sm font-medium transition-colors",
                 isActive(link.to)
-                  ? "bg-brand-50 text-brand-600"
-                  : "text-ink-600 hover:bg-gray-100 dark:hover:bg-gray-800",
+                  ? "bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-500"
+                  : "text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800",
               )}
             >
               {link.to === "/cart" ? (
@@ -137,28 +128,31 @@ function Navbar() {
               )}
             </Link>
           ))}
-        </div>
 
-        {/* Desktop user area */}
-        <div className="hidden items-center gap-3 md:flex">
           <button
             type="button"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-lg text-ink-600 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="ml-1 flex h-9 w-9 items-center justify-center rounded-full text-lg text-ink-600 transition-colors hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
           >
             {theme === "light" ? <BulbOutlined /> : <BulbFilled />}
           </button>
 
+          {/* divider between nav/theme group and account group */}
+          <span className="border-surface mx-2 h-6 w-px border-l" aria-hidden="true" />
+
           {user && (
-            <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
-              <button className="flex items-center gap-2 rounded-full px-2 py-1 text-sm font-medium text-ink-600 hover:bg-gray-100 dark:hover:bg-gray-800">
-                <Avatar size="small" icon={<UserOutlined />} />
-                <span>{user.username}</span>
-              </button>
-            </Dropdown>
+            <span className="flex items-center gap-2 rounded-full px-2 py-1 text-sm font-medium text-ink-600 dark:text-ink-400">
+              <Avatar size="small" icon={<UserOutlined />} />
+              <span className="max-w-[9rem] truncate">{user.username}</span>
+            </span>
           )}
-          <Button danger icon={<LogoutOutlined />} onClick={handleLogout}>
+
+          <Button
+            icon={<LogoutOutlined />}
+            onClick={handleLogout}
+            className="!ml-1 !rounded-full !border-gray-200 !text-ink-600 hover:!border-accent-500 hover:!text-accent-600 dark:!border-gray-700 dark:!text-ink-400"
+          >
             Logout
           </Button>
         </div>
@@ -167,7 +161,7 @@ function Navbar() {
         <button
           type="button"
           aria-label="Open menu"
-          className="flex flex-shrink-0 items-center justify-center rounded-md p-2 text-ink-600 hover:bg-gray-100 dark:hover:bg-gray-800 md:hidden"
+          className="flex flex-shrink-0 items-center justify-center rounded-md p-2 text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800 md:hidden"
           onClick={() => setMobileOpen(true)}
         >
           <MenuOutlined className="text-xl" />

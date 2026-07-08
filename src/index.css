@@ -25,6 +25,10 @@
   --color-ink-dark: #e5e7eb;
 }
 
+html {
+  background-color: var(--color-surface-muted);
+}
+
 body {
   margin: 0;
   font-family: var(--font-sans);
@@ -32,9 +36,33 @@ body {
   color: var(--color-ink-900);
 }
 
+.dark html,
 .dark body {
   background-color: var(--color-surface-dark);
   color: var(--color-ink-dark);
+}
+
+/*
+ * Reusable dark-mode-aware surface tokens.
+ * Define the light/dark pair ONCE here, then use the class name
+ * everywhere instead of retyping `bg-white dark:bg-gray-900` etc.
+ */
+@layer components {
+  .surface-page {
+    @apply bg-surface-muted dark:bg-surface-dark;
+  }
+  .surface-card {
+    @apply bg-white dark:bg-gray-900;
+  }
+  .surface-inset {
+    @apply bg-white dark:bg-gray-950;
+  }
+  .surface-header {
+    @apply bg-white/95 dark:bg-gray-900/95;
+  }
+  .border-surface {
+    @apply border-gray-200 dark:border-gray-800;
+  }
 }
 
 h1,

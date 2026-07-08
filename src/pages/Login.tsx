@@ -273,14 +273,6 @@ function Login() {
   };
 
   return (
-    // <div className="min-h-screen bg-slate-100 flex items-center justify-center p-6">
-    //   <div className="grid md:grid-cols-2 max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
-    //     <div className="bg-blue-600 p-12 flex flex-col justify-center text-white">
-    //       <Title level={2} style={{ color: "white" }}>
-    //         E-Commerce Store
-    //       </Title>
-
-
 
     <div className="flex min-h-screen items-center justify-center bg-surface-muted p-6 dark:bg-surface-dark">
       <div className="grid md:grid-cols-2 max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden dark:bg-gray-900">
