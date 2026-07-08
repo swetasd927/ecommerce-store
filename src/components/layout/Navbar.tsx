@@ -1,32 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Button, Drawer, Avatar, Dropdown, Badge, Input } from "antd";
+import { Drawer, Avatar, Badge, Input, Dropdown, Button, message } from "antd";
 import type { MenuProps } from "antd";
 import {
   ShoppingCartOutlined,
   UserOutlined,
   LogoutOutlined,
+  SettingOutlined,
   MenuOutlined,
   SearchOutlined,
   BulbOutlined,
   BulbFilled,
+  DownOutlined,
 } from "@ant-design/icons";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useCart } from "../../hooks/useCart";
-
 import { useTheme } from "../../hooks/useTheme";
 import { cn } from "../../lib/cn";
-
-interface NavLinkItem {
-  label: string;
-  to: string;
-}
-
-const NAV_LINKS: NavLinkItem[] = [
-  { label: "Home", to: "/" },
-  { label: "Cart", to: "/cart" },
-];
 
 const SEARCH_DEBOUNCE_MS = 400;
 
@@ -78,21 +69,38 @@ function Navbar() {
     navigate("/login", { replace: true });
   };
 
-  const userMenuItems: MenuProps["items"] = [
+  const isCartActive = location.pathname === "/cart";
+
+  // No dedicated Profile/Settings pages exist yet - these are wired to a
+  // placeholder toast so the menu is fully functional today and can point
+  // at real routes later without touching the navbar again.
+  const accountMenuItems: MenuProps["items"] = [
+    {
+      key: "profile",
+      label: "Profile",
+      icon: <UserOutlined />,
+      onClick: () => message.info("Profile page coming soon"),
+    },
+    {
+      key: "settings",
+      label: "Settings",
+      icon: <SettingOutlined />,
+      onClick: () => message.info("Settings page coming soon"),
+    },
+    { type: "divider" },
     {
       key: "logout",
       label: "Logout",
       icon: <LogoutOutlined />,
+      danger: true,
       onClick: handleLogout,
     },
   ];
 
-  const isActive = (to: string) => location.pathname === to;
-
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-200 bg-white/95 backdrop-blur dark:border-gray-800 dark:bg-gray-900/95">
-      <nav className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
-        {/* Logo / title */}
+    <header className="surface-header border-surface sticky top-0 z-50 border-b backdrop-blur">
+        <nav className="mx-auto flex h-16 max-w-[95%] items-center px-2">
+        {/* Left: logo, pinned to the far left */}
         <Link
           to="/"
           className="flex flex-shrink-0 items-center gap-2 font-display text-lg font-extrabold text-brand-600 hover:text-brand-700"
@@ -101,73 +109,65 @@ function Navbar() {
           <span>E-Shop</span>
         </Link>
 
-        {/* Search bar */}
-        <div className="hidden max-w-md flex-1 md:block">
-          <Input
-            value={query}
-            onChange={(e) => handleSearchChange(e.target.value)}
-            placeholder="Search for products, brands and more"
-            prefix={<SearchOutlined className="text-gray-400" />}
-            allowClear
-            className="!rounded-full"
-          />
+        {/* Center: search bar, grows to fill the space between logo and icons */}
+        <div className="hidden flex-1 justify-center px-8 md:flex">
+          <div className="w-full max-w-4xl">
+            <Input
+              value={query}
+              onChange={(e) => handleSearchChange(e.target.value)}
+              placeholder="Search for products, brands and more"
+              prefix={<SearchOutlined className="text-gray-400" />}
+              allowClear
+              className="!rounded-full"
+            />
+          </div>
         </div>
 
         <div className="flex-1 md:hidden" />
 
-        {/* Desktop nav links */}
-        <div className="hidden items-center gap-2 md:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className={cn(
-                "rounded-full px-3 py-1.5 text-sm font-medium transition-colors",
-                isActive(link.to)
-                  ? "bg-brand-50 text-brand-600"
-                  : "text-ink-600 hover:bg-gray-100 dark:hover:bg-gray-800",
-              )}
-            >
-              {link.to === "/cart" ? (
-                <Badge count={totalItems} size="small" offset={[8, -2]}>
-                  {link.label}
-                </Badge>
-              ) : (
-                link.label
-              )}
-            </Link>
-          ))}
-        </div>
-
-        {/* Desktop user area */}
-        <div className="hidden items-center gap-3 md:flex">
+        {/* Right: theme toggle, cart, account - icon-only, pinned right */}
+        <div className="hidden flex-shrink-0 items-center gap-6 md:flex">
           <button
             type="button"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-            className="flex h-9 w-9 items-center justify-center rounded-full text-lg text-ink-600 hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="icon-btn"
           >
             {theme === "light" ? <BulbOutlined /> : <BulbFilled />}
           </button>
 
+          <Link
+            to="/cart"
+            aria-label="Cart"
+            className={cn(
+              "icon-btn",
+              isCartActive && "bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-500",
+            )}
+          >
+            <Badge count={totalItems} size="small" offset={[2, -2]}>
+              <ShoppingCartOutlined />
+            </Badge>
+          </Link>
+
           {user && (
-            <Dropdown menu={{ items: userMenuItems }} placement="bottomRight">
-              <button className="flex items-center gap-2 rounded-full px-2 py-1 text-sm font-medium text-ink-600 hover:bg-gray-100 dark:hover:bg-gray-800">
+            <Dropdown menu={{ items: accountMenuItems }} trigger={["hover"]} placement="bottomRight">
+              <button
+                type="button"
+                aria-label="Account menu"
+                className="icon-btn !w-auto gap-3 px-2"
+              >
                 <Avatar size="small" icon={<UserOutlined />} />
-                <span>{user.username}</span>
+                <DownOutlined className="text-xs" />
               </button>
             </Dropdown>
           )}
-          <Button danger icon={<LogoutOutlined />} onClick={handleLogout}>
-            Logout
-          </Button>
         </div>
 
         {/* Mobile menu trigger */}
         <button
           type="button"
           aria-label="Open menu"
-          className="flex flex-shrink-0 items-center justify-center rounded-md p-2 text-ink-600 hover:bg-gray-100 dark:hover:bg-gray-800 md:hidden"
+          className="flex flex-shrink-0 items-center justify-center rounded-md p-2 text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800 md:hidden"
           onClick={() => setMobileOpen(true)}
         >
           <MenuOutlined className="text-xl" />
@@ -202,27 +202,55 @@ function Navbar() {
             </div>
           )}
 
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              onClick={() => setMobileOpen(false)}
-              className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium",
-                isActive(link.to)
-                  ? "bg-brand-50 text-brand-600"
-                  : "text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800",
-              )}
-            >
-              {link.to === "/cart" ? (
-                <Badge count={totalItems} size="small" offset={[8, -2]}>
-                  {link.label}
-                </Badge>
-              ) : (
-                link.label
-              )}
-            </Link>
-          ))}
+          <Link
+            to="/"
+            onClick={() => setMobileOpen(false)}
+            className={cn(
+              "rounded-md px-3 py-2 text-sm font-medium",
+              location.pathname === "/"
+                ? "bg-brand-50 text-brand-600"
+                : "text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800",
+            )}
+          >
+            Home
+          </Link>
+
+          <Link
+            to="/cart"
+            onClick={() => setMobileOpen(false)}
+            className={cn(
+              "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium",
+              isCartActive
+                ? "bg-brand-50 text-brand-600"
+                : "text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800",
+            )}
+          >
+            <Badge count={totalItems} size="small" offset={[6, -2]}>
+              Cart
+            </Badge>
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => {
+              message.info("Profile page");
+              setMobileOpen(false);
+            }}
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-left text-sm font-medium text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
+          >
+            <UserOutlined /> Profile
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              message.info("Settings page");
+              setMobileOpen(false);
+            }}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
+          >
+            <SettingOutlined /> Settings
+          </button>
 
           <button
             type="button"
