@@ -30,7 +30,7 @@ function Cart() {
 
       <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
         {/* Line items */}
-        <div className="flex-1 rounded-xl border border-gray-200 bg-white px-5">
+        <div className="flex-1 rounded-xl border border-gray-200 bg-white px-5 dark:border-gray-800 dark:bg-gray-900">
           {items.map((item) => (
             <CartItem key={item.product.id} item={item} />
           ))}
@@ -38,24 +38,24 @@ function Cart() {
 
         {/* Sticky order summary */}
         <div className="w-full flex-shrink-0 lg:sticky lg:top-24 lg:w-80">
-          <div className="rounded-xl border border-gray-200 bg-white p-5">
-            <h2 className="font-display text-base font-bold uppercase tracking-wide text-ink-600">
+          <div className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
+            <h2 className="font-display text-base font-bold uppercase tracking-wide text-ink-600 dark:text-ink-400">
               Order Summary
             </h2>
 
-            <div className="mt-4 flex justify-between text-sm text-ink-600">
+            <div className="mt-4 flex justify-between text-sm text-ink-600 dark:text-ink-400">
               <span>
                 Subtotal ({totalItems} {totalItems === 1 ? "item" : "items"})
               </span>
               <span>${totalPrice.toFixed(2)}</span>
             </div>
 
-            <div className="mt-2 flex justify-between text-sm text-ink-600">
+            <div className="mt-2 flex justify-between text-sm text-ink-600 dark:text-ink-400">
               <span>Delivery</span>
-              <span className="font-medium text-brand-600">Free</span>
+              <span className="font-medium text-brand-600 dark:text-brand-500">Free</span>
             </div>
 
-            <div className="mt-4 flex justify-between border-t border-gray-100 pt-4 text-lg font-bold text-ink-900">
+            <div className="mt-4 flex justify-between border-t border-gray-100 pt-4 text-lg font-bold text-ink-900 dark:border-gray-800 dark:text-ink-dark">
               <span>Total</span>
               <span>${totalPrice.toFixed(2)}</span>
             </div>

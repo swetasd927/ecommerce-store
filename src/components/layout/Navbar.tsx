@@ -196,9 +196,9 @@ function Navbar() {
       >
         <div className="flex flex-col gap-1">
           {user && (
-            <div className="mb-4 flex items-center gap-3 rounded-md bg-gray-50 p-3">
+            <div className="mb-4 flex items-center gap-3 rounded-md bg-gray-50 p-3 dark:bg-gray-800">
               <Avatar icon={<UserOutlined />} />
-              <span className="font-medium text-ink-900">{user.username}</span>
+              <span className="font-medium text-ink-900 dark:text-ink-dark">{user.username}</span>
             </div>
           )}
 
@@ -211,7 +211,7 @@ function Navbar() {
                 "rounded-md px-3 py-2 text-sm font-medium",
                 isActive(link.to)
                   ? "bg-brand-50 text-brand-600"
-                  : "text-ink-600 hover:bg-gray-100",
+                  : "text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800",
               )}
             >
               {link.to === "/cart" ? (
@@ -227,7 +227,7 @@ function Navbar() {
           <button
             type="button"
             onClick={toggleTheme}
-            className="mt-2 flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-ink-600 hover:bg-gray-100"
+            className="mt-2 flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
           >
             {theme === "light" ? <BulbOutlined /> : <BulbFilled />}
             {theme === "light" ? "Dark mode" : "Light mode"}
