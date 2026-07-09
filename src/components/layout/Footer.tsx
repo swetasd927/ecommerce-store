@@ -35,13 +35,7 @@ function Footer() {
     <footer className="footer-wrap">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-          {/* Logo */}
-          <div className="col-span-2 sm:col-span-1">
-            <span className="text-ink-primary font-display text-lg font-bold">
-              LOGO
-            </span>
-          </div>
-
+         
           {/* Link columns */}
           {footerLinks.map((section) => (
             <div key={section.heading}>
@@ -60,7 +54,7 @@ function Footer() {
 
           {/* Follow Us */}
           <div>
-            <h3 className="footer-heading">Follow Us</h3>
+            <h3 className="footer-heading text">Follow our socials</h3>
             <ul className="space-y-2">
               {socialLinks.map((social) => (
                 <li key={social.label}>
@@ -80,7 +74,7 @@ function Footer() {
 
         {/* Bottom bar */}
         <div className="footer-bottom mt-8 pt-6 text-center">
-          © 2026 ECOM. All rights reserved.
+          © 2026 E-SHOP. All rights reserved.
         </div>
       </div>
     </footer>
