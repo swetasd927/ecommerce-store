@@ -46,6 +46,11 @@ body {
  * Reusable dark-mode-aware tokens.
  * Define each light/dark pair ONCE here, then use the class name
  * everywhere instead of retyping `bg-white dark:bg-gray-900` etc.
+ *
+ * IMPORTANT (Tailwind v4): @apply can only reference real Tailwind
+ * utilities, never another custom class from this same layer. So every
+ * rule below spells out the underlying utilities directly instead of
+ * chaining e.g. `@apply surface-card` inside another custom class.
  */
 @layer components {
   /* --- backgrounds --- */
@@ -72,10 +77,11 @@ body {
   .skeleton-tile {
     @apply bg-gray-100 dark:bg-gray-800;
   }
+
   /* Circular icon button - theme toggle, cart, account trigger all share this */
-.icon-btn {
-  @apply flex h-9 w-9 items-center justify-center rounded-full text-lg text-ink-600 transition-colors hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800;
-}
+  .icon-btn {
+    @apply flex h-9 w-9 items-center justify-center rounded-full text-lg text-ink-600 transition-colors hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800;
+  }
 
   /* --- text colors --- */
   .text-ink-primary {
