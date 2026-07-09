@@ -99,7 +99,7 @@ function Navbar() {
 
   return (
     <header className="surface-header border-surface sticky top-0 z-50 border-b backdrop-blur">
-        <nav className="mx-auto flex h-16 max-w-[95%] items-center px-2">
+      <nav className="mx-auto flex h-16 max-w-[95%] items-center px-2">
         {/* Left: logo, pinned to the far left */}
         <Link
           to="/"
