@@ -35,11 +35,7 @@ function Footer() {
     <footer className="footer-wrap">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-<<<<<<< HEAD
-        
-=======
          
->>>>>>> 97ada98a5c715ec4c71c513a714cfe164a5a8bee
           {/* Link columns */}
           {footerLinks.map((section) => (
             <div key={section.heading}>
