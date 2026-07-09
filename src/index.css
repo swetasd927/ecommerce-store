@@ -87,6 +87,20 @@ body {
   .text-brand-accent {
     @apply text-brand-600 dark:text-brand-500;
   }
+
+  /* --- footer --- */
+  .footer-wrap {
+    @apply surface-card border-surface border-t;
+  }
+  .footer-heading {
+    @apply text-ink-primary mb-3 text-sm font-semibold;
+  }
+  .footer-link {
+    @apply text-ink-secondary hover:text-brand-accent text-sm transition-colors;
+  }
+  .footer-bottom {
+    @apply border-surface text-ink-secondary border-t text-sm;
+  }
 }
 
 h1,
