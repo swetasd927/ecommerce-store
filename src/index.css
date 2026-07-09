@@ -139,16 +139,16 @@ body {
   }
 
   .product-card-body {
-    @apply flex flex-1 flex-col gap-1 p-3;
+    @apply flex flex-1 flex-col gap-1 p-2.5;
   }
   .product-card-title {
-    @apply line-clamp-2 min-h-[2.25rem] text-sm font-medium text-ink-900 dark:text-ink-dark;
+    @apply line-clamp-2 min-h-[2.25rem] text-[13px] font-medium text-ink-900 dark:text-ink-dark;
   }
   .product-card-footer {
     @apply mt-auto flex items-center justify-between gap-2 pt-1;
   }
   .product-price {
-    @apply text-base font-bold text-ink-900 dark:text-ink-dark;
+    @apply text-sm font-bold text-ink-900 dark:text-ink-dark;
   }
 }
 
