@@ -35,7 +35,11 @@ function Footer() {
     <footer className="footer-wrap">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
+<<<<<<< HEAD
         
+=======
+         
+>>>>>>> 97ada98a5c715ec4c71c513a714cfe164a5a8bee
           {/* Link columns */}
           {footerLinks.map((section) => (
             <div key={section.heading}>
@@ -54,7 +58,7 @@ function Footer() {
 
           {/* Follow Us */}
           <div>
-            <h3 className="footer-heading">Follow Us</h3>
+            <h3 className="footer-heading text">Follow our socials</h3>
             <ul className="space-y-2">
               {socialLinks.map((social) => (
                 <li key={social.label}>
