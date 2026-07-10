@@ -174,12 +174,6 @@ function Home() {
   const { data: products, isLoading, error } = useProducts();
   const { data: categories } = useCategories();
 
-  // Key that changes whenever filters/sort/view-mode change. Instead of
-  // resetting `visibleCount` in an effect (which causes an extra render
-  // pass), we compare this against its previous render value and adjust
-  // state directly during render - React bails out of the render whenever
-  // state changes this way, without committing an intermediate frame.
-  
   const filterKey = `${selectedCategory}|${searchQuery}|${sort}|${viewMode}`;
   const [prevFilterKey, setPrevFilterKey] = useState(filterKey);
   const [visibleCount, setVisibleCount] = useState(INFINITE_SCROLL_BATCH);
