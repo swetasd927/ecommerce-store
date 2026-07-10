@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -44,9 +44,11 @@ body {
 
 /*
  * Reusable dark-mode-aware tokens.
+ * Define each light/dark pair ONCE here, then use the class name
+ * everywhere instead of retyping `bg-white dark:bg-gray-900` etc.
  */
 @layer components {
-  /*backgrounds*/
+  /* --- backgrounds --- */
   .surface-page {
     @apply bg-surface-muted dark:bg-surface-dark;
   }
@@ -63,7 +65,7 @@ body {
     @apply border-gray-200 dark:border-gray-800;
   }
 
-  /* skeleton/shimmer loading blocks*/
+  /* --- skeleton/shimmer loading blocks --- */
   .skeleton-block {
     @apply bg-gray-200 dark:bg-gray-800;
   }
@@ -71,12 +73,12 @@ body {
     @apply bg-gray-100 dark:bg-gray-800;
   }
 
-  /* Circular icon button: theme toggle, cart, account trigger all share this */
+  /* Circular icon button - theme toggle, cart, account trigger all share this */
   .icon-btn {
     @apply flex h-9 w-9 items-center justify-center rounded-full text-lg text-ink-600 transition-colors hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800;
   }
 
-  /*text colors*/
+  /* --- text colors --- */
   .text-ink-primary {
     @apply text-ink-900 dark:text-ink-dark;
   }
@@ -87,7 +89,7 @@ body {
     @apply text-brand-600 dark:text-brand-500;
   }
 
-  /*footer*/
+  /* --- footer --- */
   .footer-wrap {
     @apply border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900;
   }
@@ -101,7 +103,7 @@ body {
     @apply border-t border-gray-200 text-sm text-ink-600 dark:border-gray-800 dark:text-ink-400;
   }
 
-  /*product card*/
+  /* --- product card --- */
   .product-card {
     @apply flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-black/30;
   }
@@ -115,7 +117,7 @@ body {
     @apply absolute top-2 left-2 z-10 rounded-full bg-accent-500 px-2 py-0.5 text-[11px] font-semibold text-white;
   }
 
-  /* Hover-reveal*/
+  /* Hover-reveal */
   .product-card-cta-wrap {
     @apply absolute inset-x-2 bottom-2 translate-y-0 opacity-100 transition-all duration-200 sm:translate-y-3 sm:opacity-0;
   }

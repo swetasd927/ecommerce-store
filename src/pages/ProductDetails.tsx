@@ -107,8 +107,7 @@ function ProductDetails() {
           </div>
         </div>
       </div>
-
-      <RelatedProducts category={product.category} currentProductId={product.id} />
+       <RelatedProducts category={product.category} currentProductId={product.id} />
     </div>
   );
 }
