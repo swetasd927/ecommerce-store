@@ -73,7 +73,7 @@ function Footer() {
 
         {/* Bottom bar */}
         <div className="footer-bottom mt-8 pt-6 text-center">
-          ┬⌐ 2026 E-SHOP. All rights reserved.
+          2026 E-SHOP. All rights reserved.
         </div>
       </div>
     </footer>

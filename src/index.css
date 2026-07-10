@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -91,18 +91,17 @@ body {
 
   /* --- footer --- */
   .footer-wrap {
-    @apply surface-card border-surface border-t;
+    @apply bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 border-t;
   }
   .footer-heading {
-    @apply text-ink-primary mb-3 text-sm font-semibold;
-  }
-  .footer-link {
-    @apply text-ink-secondary hover:text-brand-accent text-sm transition-colors;
-  }
-  .footer-bottom {
-    @apply border-surface text-ink-secondary border-t text-sm;
-  }
-
+  @apply text-ink-900 dark:text-ink-dark mb-3 text-sm font-semibold;
+}
+.footer-link {
+  @apply text-ink-600 dark:text-ink-400 hover:text-brand-600 dark:hover:text-brand-500 text-sm transition-colors;
+}
+.footer-bottom {
+  @apply border-gray-200 dark:border-gray-800 text-ink-600 dark:text-ink-400 border-t text-sm;
+}
   /* --- product card --- */
   .product-card {
     @apply flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-black/30;
@@ -137,8 +136,6 @@ body {
   .product-price {
     @apply text-sm font-bold text-ink-900 dark:text-ink-dark;
   }
-=======
->>>>>>> feat/footer
 }
 
 h1,

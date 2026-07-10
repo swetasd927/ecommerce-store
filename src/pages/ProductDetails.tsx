@@ -5,6 +5,7 @@ import { ShoppingCartOutlined, LeftOutlined } from "@ant-design/icons";
 
 import { useProduct } from "../hooks/useProduct";
 import { useCart } from "../hooks/useCart";
+import RelatedProducts from "../components/product/RelatedProducts";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -106,6 +107,7 @@ function ProductDetails() {
           </div>
         </div>
       </div>
+       <RelatedProducts category={product.category} currentProductId={product.id} />
     </div>
   );
 }
