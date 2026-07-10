@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Drawer, Avatar, Badge, Input, Dropdown, Button, message } from "antd";
-import type { MenuProps } from "antd";
+import { Button, Drawer, Avatar, Badge, Input } from "antd";
 import {
   ShoppingCartOutlined,
   UserOutlined,
@@ -69,37 +68,11 @@ function Navbar() {
     navigate("/login", { replace: true });
   };
 
-  const isCartActive = location.pathname === "/cart";
-
-  // No dedicated Profile/Settings pages exist yet - these are wired to a
-  // placeholder toast so the menu is fully functional today and can point
-  // at real routes later without touching the navbar again.
-  const accountMenuItems: MenuProps["items"] = [
-    {
-      key: "profile",
-      label: "Profile",
-      icon: <UserOutlined />,
-      onClick: () => message.info("Profile page coming soon"),
-    },
-    {
-      key: "settings",
-      label: "Settings",
-      icon: <SettingOutlined />,
-      onClick: () => message.info("Settings page coming soon"),
-    },
-    { type: "divider" },
-    {
-      key: "logout",
-      label: "Logout",
-      icon: <LogoutOutlined />,
-      danger: true,
-      onClick: handleLogout,
-    },
-  ];
+  const isActive = (to: string) => location.pathname === to;
 
   return (
     <header className="surface-header border-surface sticky top-0 z-50 border-b backdrop-blur">
-      <nav className="mx-auto flex h-16 max-w-[95%] items-center px-2">
+      <nav className="mx-auto flex h-16 max-w-7xl items-center px-4 sm:px-6 lg:px-8">
         {/* Left: logo, pinned to the far left */}
         <Link
           to="/"
@@ -109,9 +82,9 @@ function Navbar() {
           <span>E-Shop</span>
         </Link>
 
-        {/* Center: search bar, grows to fill the space between logo and icons */}
+        {/* Center: search bar, grows to fill the space between logo and nav */}
         <div className="hidden flex-1 justify-center px-8 md:flex">
-          <div className="w-full max-w-4xl">
+          <div className="w-full max-w-md">
             <Input
               value={query}
               onChange={(e) => handleSearchChange(e.target.value)}
@@ -125,42 +98,55 @@ function Navbar() {
 
         <div className="flex-1 md:hidden" />
 
-        {/* Right: theme toggle, cart, account - icon-only, pinned right */}
-        <div className="hidden flex-shrink-0 items-center gap-6 md:flex">
+        {/* Right: nav links, theme toggle, account, logout - grouped and pinned right */}
+        <div className="hidden flex-shrink-0 items-center gap-1 md:flex">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={cn(
+                "rounded-full px-3 py-1.5 text-sm font-medium transition-colors",
+                isActive(link.to)
+                  ? "bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-500"
+                  : "text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800",
+              )}
+            >
+              {link.to === "/cart" ? (
+                <Badge count={totalItems} size="small" offset={[8, -2]}>
+                  {link.label}
+                </Badge>
+              ) : (
+                link.label
+              )}
+            </Link>
+          ))}
+
           <button
             type="button"
             onClick={toggleTheme}
             aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
-            className="icon-btn"
+            className="ml-1 flex h-9 w-9 items-center justify-center rounded-full text-lg text-ink-600 transition-colors hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
           >
             {theme === "light" ? <BulbOutlined /> : <BulbFilled />}
           </button>
 
-          <Link
-            to="/cart"
-            aria-label="Cart"
-            className={cn(
-              "icon-btn",
-              isCartActive && "bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-500",
-            )}
-          >
-            <Badge count={totalItems} size="small" offset={[2, -2]}>
-              <ShoppingCartOutlined />
-            </Badge>
-          </Link>
+          {/* divider between nav/theme group and account group */}
+          <span className="border-surface mx-2 h-6 w-px border-l" aria-hidden="true" />
 
           {user && (
-            <Dropdown menu={{ items: accountMenuItems }} trigger={["hover"]} placement="bottomRight">
-              <button
-                type="button"
-                aria-label="Account menu"
-                className="icon-btn !w-auto gap-3 px-2"
-              >
-                <Avatar size="small" icon={<UserOutlined />} />
-                <DownOutlined className="text-xs" />
-              </button>
-            </Dropdown>
+            <span className="flex items-center gap-2 rounded-full px-2 py-1 text-sm font-medium text-ink-600 dark:text-ink-400">
+              <Avatar size="small" icon={<UserOutlined />} />
+              <span className="max-w-[9rem] truncate">{user.username}</span>
+            </span>
           )}
+
+          <Button
+            icon={<LogoutOutlined />}
+            onClick={handleLogout}
+            className="!ml-1 !rounded-full !border-gray-200 !text-ink-600 hover:!border-accent-500 hover:!text-accent-600 dark:!border-gray-700 dark:!text-ink-400"
+          >
+            Logout
+          </Button>
         </div>
 
         {/* Mobile menu trigger */}
