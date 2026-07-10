@@ -71,9 +71,6 @@ function Navbar() {
 
   const isCartActive = location.pathname === "/cart";
 
-  // No dedicated Profile/Settings pages exist yet - these are wired to a
-  // placeholder toast so the menu is fully functional today and can point
-  // at real routes later without touching the navbar again.
   const accountMenuItems: MenuProps["items"] = [
     {
       key: "profile",
