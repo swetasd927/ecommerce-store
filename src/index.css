@@ -137,6 +137,8 @@ body {
   .product-price {
     @apply text-sm font-bold text-ink-900 dark:text-ink-dark;
   }
+=======
+>>>>>>> feat/footer
 }
 
 h1,
