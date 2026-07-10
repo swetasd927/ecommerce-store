@@ -5,26 +5,18 @@ import {
   ShoppingCartOutlined,
   UserOutlined,
   LogoutOutlined,
+  SettingOutlined,
   MenuOutlined,
   SearchOutlined,
   BulbOutlined,
   BulbFilled,
+  DownOutlined,
 } from "@ant-design/icons";
 
 import { useAuth } from "../../hooks/useAuth";
 import { useCart } from "../../hooks/useCart";
 import { useTheme } from "../../hooks/useTheme";
 import { cn } from "../../lib/cn";
-
-interface NavLinkItem {
-  label: string;
-  to: string;
-}
-
-const NAV_LINKS: NavLinkItem[] = [
-  { label: "Home", to: "/" },
-  { label: "Cart", to: "/cart" },
-];
 
 const SEARCH_DEBOUNCE_MS = 400;
 
@@ -196,27 +188,55 @@ function Navbar() {
             </div>
           )}
 
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              onClick={() => setMobileOpen(false)}
-              className={cn(
-                "rounded-md px-3 py-2 text-sm font-medium",
-                isActive(link.to)
-                  ? "bg-brand-50 text-brand-600"
-                  : "text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800",
-              )}
-            >
-              {link.to === "/cart" ? (
-                <Badge count={totalItems} size="small" offset={[8, -2]}>
-                  {link.label}
-                </Badge>
-              ) : (
-                link.label
-              )}
-            </Link>
-          ))}
+          <Link
+            to="/"
+            onClick={() => setMobileOpen(false)}
+            className={cn(
+              "rounded-md px-3 py-2 text-sm font-medium",
+              location.pathname === "/"
+                ? "bg-brand-50 text-brand-600"
+                : "text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800",
+            )}
+          >
+            Home
+          </Link>
+
+          <Link
+            to="/cart"
+            onClick={() => setMobileOpen(false)}
+            className={cn(
+              "flex items-center gap-2 rounded-md px-3 py-2 text-sm font-medium",
+              isCartActive
+                ? "bg-brand-50 text-brand-600"
+                : "text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800",
+            )}
+          >
+            <Badge count={totalItems} size="small" offset={[6, -2]}>
+              Cart
+            </Badge>
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => {
+              message.info("Profile page");
+              setMobileOpen(false);
+            }}
+            className="flex items-center gap-3 rounded-md px-3 py-2 text-left text-sm font-medium text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
+          >
+            <UserOutlined /> Profile
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              message.info("Settings page");
+              setMobileOpen(false);
+            }}
+            className="flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
+          >
+            <SettingOutlined /> Settings
+          </button>
 
           <button
             type="button"
