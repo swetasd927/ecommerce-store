@@ -1,0 +1,45 @@
+import { useProducts } from "../../hooks/useProducts";
+import ProductGrid from "./ProductGrid";
+import ProductSkeletonGrid from "./ProductSkeletonGrid";
+
+type RelatedProductsProps = {
+  category: string;
+  currentProductId: number;
+  limit?: number;
+};
+
+const DEFAULT_LIMIT = 5;
+
+function RelatedProducts({ category, currentProductId, limit = DEFAULT_LIMIT }: RelatedProductsProps) {
+  const { data: products, isLoading } = useProducts();
+
+  const related = products
+    ?.filter((p) => p.category === category && p.id !== currentProductId)
+    .slice(0, limit);
+
+  if (isLoading) {
+    return (
+      <div className="mt-10">
+        <h2 className="text-ink-900 dark:text-ink-dark font-display mb-4 text-xl font-bold">
+          You may also like
+        </h2>
+        <ProductSkeletonGrid count={limit} />
+      </div>
+    );
+  }
+
+  if (!related || related.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="mt-10">
+      <h2 className="text-ink-900 dark:text-ink-dark font-display mb-4 text-xl font-bold">
+        You may also like
+      </h2>
+      <ProductGrid products={related} />
+    </div>
+  );
+}
+
+export default RelatedProducts;

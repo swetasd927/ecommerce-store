@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Drawer, Avatar, Badge, Input, Dropdown, Button, message } from "antd";
 import type { MenuProps } from "antd";
@@ -71,9 +71,6 @@ function Navbar() {
 
   const isCartActive = location.pathname === "/cart";
 
-  // No dedicated Profile/Settings pages exist yet - these are wired to a
-  // placeholder toast so the menu is fully functional today and can point
-  // at real routes later without touching the navbar again.
   const accountMenuItems: MenuProps["items"] = [
     {
       key: "profile",
