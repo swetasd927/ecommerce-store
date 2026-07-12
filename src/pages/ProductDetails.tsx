@@ -16,7 +16,7 @@ function ProductDetails() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-5xl animate-pulse p-6 sm:p-8">
+      <div className="mx-auto max-w-7xl animate-pulse p-6 sm:p-8">
         <div className="grid gap-8 md:grid-cols-2">
           <div className="skeleton-tile aspect-square rounded-xl" />
           <div className="flex flex-col gap-3">
@@ -46,7 +46,7 @@ function ProductDetails() {
   };
 
   return (
-    <div className="mx-auto max-w-5xl p-4 sm:p-8">
+    <div className="mx-auto max-w-7xl p-4 sm:p-8">
       <Link
         to="/"
         className="text-ink-secondary mb-6 inline-flex items-center gap-1 text-sm font-medium hover:text-brand-600 dark:hover:text-brand-500"
@@ -55,7 +55,7 @@ function ProductDetails() {
       </Link>
 
       <div className="surface-card border-surface grid gap-8 rounded-xl border p-6 md:grid-cols-2 md:p-8">
-        <div className="surface-inset flex aspect-square items-center justify-center rounded-lg p-8">
+       <div className="surface-inset mx-auto flex aspect-square w-full max-h-130  max-w-130 items-center justify-center rounded-lg p-8">
           <img
             src={product.image}
             alt={product.title}
@@ -63,7 +63,7 @@ function ProductDetails() {
           />
         </div>
 
-        <div className="flex flex-col">
+        <div className="flex flex-col justify-center">
           <span className="text-brand-accent text-xs font-semibold uppercase tracking-wide">
             {product.category}
           </span>
@@ -94,6 +94,7 @@ function ProductDetails() {
               value={quantity}
               onChange={(value) => setQuantity(value ?? 1)}
               size="large"
+              className="qty-input"
             />
             <Button
               type="primary"

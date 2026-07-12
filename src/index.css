@@ -145,3 +145,7 @@ h3,
 h4 {
   font-family: var(--font-display);
 }
+
+.qty-input .ant-input-number-input {
+  text-align: center;
+}
