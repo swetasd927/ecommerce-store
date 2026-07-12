@@ -25,7 +25,7 @@ function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="group flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-black/30"
+      className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-black/30"
     >
       <div className="relative flex aspect-square items-center justify-center bg-white p-6 dark:bg-gray-950">
         {product.rating.rate >= 4.5 && (
@@ -36,14 +36,14 @@ function ProductCard({ product }: ProductCardProps) {
         <ProductImage src={product.image} alt={product.title} />
       </div>
 
-      <div className="flex flex-1 flex-col gap-1.5 border-t border-gray-100 p-4 dark:border-gray-800">
+      <div className="flex flex-col gap-1.5 border-t border-gray-100 p-4 dark:border-gray-800">
         <h2 className="line-clamp-2 min-h-[2.5rem] text-sm font-medium text-ink-900 dark:text-ink-dark">
           {product.title}
         </h2>
 
         <ProductRating rate={product.rating.rate} count={product.rating.count} />
 
-        <div className="mt-auto flex items-center justify-between gap-2 pt-2">
+        <div className="mt-3 flex items-center justify-between gap-2">
           <p className="text-lg font-bold text-ink-900 dark:text-ink-dark">
             ${product.price.toFixed(2)}
           </p>
