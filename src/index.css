@@ -1,4 +1,4 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -46,61 +46,64 @@ body {
  * Reusable dark-mode-aware tokens.
  * Define each light/dark pair ONCE here, then use the class name
  * everywhere instead of retyping `bg-white dark:bg-gray-900` etc.
+ *
+ * NOTE: Tailwind v4 requires @utility (not @layer components) for any
+ * class that will itself be referenced inside another @apply below.
  */
-@layer components {
-  /* --- backgrounds --- */
-  .surface-page {
-    @apply bg-surface-muted dark:bg-surface-dark;
-  }
-  .surface-card {
-    @apply bg-white dark:bg-gray-900;
-  }
-  .surface-inset {
-    @apply bg-white dark:bg-gray-950;
-  }
-  .surface-header {
-    @apply bg-white/95 dark:bg-gray-900/95;
-  }
-  .border-surface {
-    @apply border-gray-200 dark:border-gray-800;
-  }
 
-  /* --- skeleton/shimmer loading blocks --- */
-  .skeleton-block {
-    @apply bg-gray-200 dark:bg-gray-800;
-  }
-  .skeleton-tile {
-    @apply bg-gray-100 dark:bg-gray-800;
-  }
-  /* Circular icon button - theme toggle, cart, account trigger all share this */
-.icon-btn {
+/* --- backgrounds --- */
+@utility surface-page {
+  @apply bg-surface-muted dark:bg-surface-dark;
+}
+@utility surface-card {
+  @apply bg-white dark:bg-gray-900;
+}
+@utility surface-inset {
+  @apply bg-white dark:bg-gray-950;
+}
+@utility surface-header {
+  @apply bg-white/95 dark:bg-gray-900/95;
+}
+@utility border-surface {
+  @apply border-gray-200 dark:border-gray-800;
+}
+
+/* --- skeleton/shimmer loading blocks --- */
+@utility skeleton-block {
+  @apply bg-gray-200 dark:bg-gray-800;
+}
+@utility skeleton-tile {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+/* Circular icon button - theme toggle, cart, account trigger all share this */
+@utility icon-btn {
   @apply flex h-9 w-9 items-center justify-center rounded-full text-lg text-ink-600 transition-colors hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800;
 }
 
-  /* --- text colors --- */
-  .text-ink-primary {
-    @apply text-ink-900 dark:text-ink-dark;
-  }
-  .text-ink-secondary {
-    @apply text-ink-600 dark:text-ink-400;
-  }
-  .text-brand-accent {
-    @apply text-brand-600 dark:text-brand-500;
-  }
+/* --- text colors --- */
+@utility text-ink-primary {
+  @apply text-ink-900 dark:text-ink-dark;
+}
+@utility text-ink-secondary {
+  @apply text-ink-600 dark:text-ink-400;
+}
+@utility text-brand-accent {
+  @apply text-brand-600 dark:text-brand-500;
+}
 
-  /* --- footer --- */
-  .footer-wrap {
-    @apply surface-card border-surface border-t;
-  }
-  .footer-heading {
-    @apply text-ink-primary mb-3 text-sm font-semibold;
-  }
-  .footer-link {
-    @apply text-ink-secondary hover:text-brand-accent text-sm transition-colors;
-  }
-  .footer-bottom {
-    @apply border-surface text-ink-secondary border-t text-sm;
-  }
+/* --- footer --- */
+@utility footer-wrap {
+  @apply surface-card border-surface border-t;
+}
+@utility footer-heading {
+  @apply text-ink-primary mb-3 text-sm font-semibold;
+}
+@utility footer-link {
+  @apply text-ink-secondary hover:text-brand-accent text-sm transition-colors;
+}
+@utility footer-bottom {
+  @apply border-surface text-ink-secondary border-t text-sm;
 }
 
 h1,
