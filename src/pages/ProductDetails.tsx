@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button, InputNumber, Rate, message } from "antd";
-import { ShoppingCartOutlined, LeftOutlined } from "@ant-design/icons";
+import { Button, InputNumber, Rate, message, Image } from "antd";
+import { ShoppingCartOutlined, LeftOutlined, ZoomInOutlined } from "@ant-design/icons";
 
 import { useProduct } from "../hooks/useProduct";
 import { useCart } from "../hooks/useCart";
@@ -55,11 +55,18 @@ function ProductDetails() {
       </Link>
 
       <div className="surface-card border-surface grid gap-8 rounded-xl border p-6 md:grid-cols-2 md:p-8">
-       <div className="surface-inset mx-auto flex aspect-square w-full max-h-130  max-w-130 items-center justify-center rounded-lg p-8">
-          <img
+       <div className="surface-inset group relative mx-auto flex aspect-square w-full max-h-130  max-w-130 items-center justify-center rounded-lg p-8">
+          <Image
             src={product.image}
             alt={product.title}
-            className="h-full w-full object-contain"
+            className="h-full! w-full! object-contain!"
+            preview={{
+              mask: (
+                <span className="flex items-center gap-2 text-sm font-medium">
+                  <ZoomInOutlined /> Click to zoom
+                </span>
+              ),
+            }}
           />
         </div>
 
@@ -73,7 +80,7 @@ function ProductDetails() {
           </h1>
 
           <div className="mt-2 flex items-center gap-2">
-            <Rate disabled allowHalf defaultValue={product.rating.rate} className="!text-sm !text-accent-500" />
+            <Rate disabled allowHalf defaultValue={product.rating.rate} className="text-sm! text-accent-500!" />
             <span className="text-sm text-ink-400">
               {product.rating.rate} ({product.rating.count} ratings)
             </span>
