@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
 import { cn } from "../../lib/cn";
-import type { StatusKind } from "../../lib/StatusUtils";
+import type { StatusKind } from "../../lib/statusUtils";
 
 const STATUS_CLASS: Record<StatusKind, string> = {
   success: "status-success",
@@ -22,14 +22,6 @@ export interface StatusTagProps {
   children: ReactNode;
 }
 
-/**
- * Semantic status pill for order/payment state ("Paid", "Pending", "Failed"...).
- * Colors come from the FIXED success/danger/warning/neutral tokens defined in
- * index.css, never from primary/secondary - so these stay meaningful no
- * matter what brand color the merchant picks. The status->color mapping
- * logic itself lives in lib/statusUtils.ts, not here, so this file only
- * exports the component (required for Fast Refresh to work on this file).
- */
 function StatusTag({ status, children }: StatusTagProps) {
   return (
     <span
