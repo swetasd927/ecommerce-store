@@ -84,7 +84,7 @@ function Profile() {
           </button>
 
           <button
-            onClick={() => message.info("Wishlist coming soon")}
+            onClick={() => navigate("/wishlist")}
             className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-4 text-left transition-colors hover:border-brand-500 dark:border-gray-800 dark:bg-gray-900 dark:hover:border-brand-500"
           >
             <HeartOutlined className="text-xl text-brand-500" />
@@ -114,9 +114,14 @@ function Profile() {
             <Form.Item
               label="Display name"
               name="displayName"
-              rules={[{ required: true, message: "Please enter a display name" }]}
+              rules={[
+                { required: true, message: "Please enter a display name" },
+              ]}
             >
-              <Input prefix={<UserOutlined className="text-ink-400" />} placeholder="Jane Doe" />
+              <Input
+                prefix={<UserOutlined className="text-ink-400" />}
+                placeholder="Jane Doe"
+              />
             </Form.Item>
 
             <Form.Item
@@ -124,7 +129,10 @@ function Profile() {
               name="email"
               rules={[{ type: "email", message: "Enter a valid email" }]}
             >
-              <Input prefix={<MailOutlined className="text-ink-400" />} placeholder="you@example.com" />
+              <Input
+                prefix={<MailOutlined className="text-ink-400" />}
+                placeholder="you@example.com"
+              />
             </Form.Item>
 
             <Button type="submit" variant="primary" disabled={saving}>

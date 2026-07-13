@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 
 import AuthProvider from "./context/AuthContext";
 import CartProvider from "./context/CartContext";
+import WishlistProvider from "./context/WishlistContext";
 import ThemeProvider from "./context/ThemeContext";
 import AntdThemeBridge from "./context/AntdThemeBridge";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
@@ -16,12 +17,14 @@ import PublicOnlyRoute from "./components/auth/PublicOnlyRoute";
 import AppLayout from "./components/layout/AppLayout";
 import Contact from "./pages/Contact";
 import Profile from "./pages/Profile";
+import Wishlist from "./pages/Wishlist";
 
 function App() {
   return (
     <ThemeProvider>
       <AntdThemeBridge>
         <CartProvider>
+          <WishlistProvider>
           <AuthProvider>
             <Routes>
               <Route
@@ -49,9 +52,11 @@ function App() {
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/profile" element={<Profile />} />
+                <Route path="/wishlist" element={<Wishlist />} />
               </Route>
             </Routes>
           </AuthProvider>
+          </WishlistProvider>
         </CartProvider>
       </AntdThemeBridge>
     </ThemeProvider>
