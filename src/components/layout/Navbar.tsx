@@ -1,6 +1,6 @@
 ﻿import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Drawer, Avatar, Badge, Input, Dropdown, Button } from "antd";
+import { Drawer, Avatar, Badge, Input, Dropdown, Button, Modal } from "antd";
 import type { MenuProps } from "antd";
 import {
   ShoppingCartOutlined,
@@ -68,9 +68,21 @@ function Navbar() {
   }, []);
 
   const handleLogout = () => {
-    logout();
-    navigate("/login", { replace: true });
-  };
+  Modal.confirm({
+    title: "Log out?",
+    content: "Are you sure you want to log out of your account?",
+    okText: "Yes, Logout",
+    cancelText: "Cancel",
+    centered: true,
+    okButtonProps: {
+      danger: true,
+    },
+    onOk: () => {
+      logout();
+      navigate("/login", { replace: true });
+    },
+  });
+};
 
   const isCartActive = location.pathname === "/cart";
 
