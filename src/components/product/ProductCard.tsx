@@ -25,7 +25,7 @@ function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-black/30"
+      className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-shadow hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-black/30"
     >
       <div className="relative flex h-60 items-center justify-center bg-white p-6 dark:bg-gray-950">
         <ProductImage src={product.image} alt={product.title} topRated={product.rating.rate >= 4.5} />

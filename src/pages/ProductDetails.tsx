@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, InputNumber, Rate, message, Image } from "antd";
 import { ShoppingCartOutlined, LeftOutlined, ZoomInOutlined } from "@ant-design/icons";
+import { motion } from "framer-motion";
 
 import { useProduct } from "../hooks/useProduct";
 import { useCart } from "../hooks/useCart";
 import RelatedProducts from "../components/product/RelatedProducts";
+import { fadeUp, scaleIn } from "../lib/motion";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -55,7 +57,12 @@ function ProductDetails() {
       </Link>
 
       <div className="surface-card border-surface grid gap-8 rounded-xl border p-6 md:grid-cols-2 md:p-8">
-       <div className="surface-inset group relative mx-auto flex aspect-square w-full max-h-130  max-w-130 items-center justify-center rounded-lg p-8">
+       <motion.div
+         className="surface-inset group relative mx-auto flex aspect-square w-full max-h-130  max-w-130 items-center justify-center rounded-lg p-8"
+         initial="hidden"
+         animate="visible"
+         variants={scaleIn}
+       >
           <Image
             src={product.image}
             alt={product.title}
@@ -68,9 +75,14 @@ function ProductDetails() {
               ),
             }}
           />
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col justify-center">
+        <motion.div
+          className="flex flex-col justify-center"
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+        >
           <span className="text-brand-accent text-xs font-semibold uppercase tracking-wide">
             {product.category}
           </span>
@@ -113,7 +125,7 @@ function ProductDetails() {
               Add to Cart
             </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
        <RelatedProducts category={product.category} currentProductId={product.id} />
     </div>
