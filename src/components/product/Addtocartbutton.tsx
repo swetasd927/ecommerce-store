@@ -8,9 +8,13 @@ type AddToCartButtonProps = {
 
 function AddToCartButton({ label, onClick }: AddToCartButtonProps) {
   return (
-    <button type="button" onClick={onClick} className="product-card-cta-btn" aria-label={label}>
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-500 text-white transition-colors hover:bg-brand-600"
+    >
       <ShoppingCartOutlined />
-      Add to Cart
     </button>
   );
 }
