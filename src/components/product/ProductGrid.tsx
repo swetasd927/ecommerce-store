@@ -17,7 +17,7 @@ function ProductGrid({ products }: ProductGridProps) {
       animate="visible"
     >
       {products.map((product) => (
-        <motion.div key={product.id} variants={fadeUp} {...cardHover}>
+        <motion.div key={product.id} className="h-full" variants={fadeUp} {...cardHover}>
           <ProductCard product={product} />
         </motion.div>
       ))}
