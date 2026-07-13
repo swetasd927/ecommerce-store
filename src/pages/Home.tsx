@@ -137,7 +137,7 @@ function Home() {
   return (
     <div className="mx-auto max-w-7xl p-4 sm:p-6">
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+        {/* <div>
           <h1 className="font-display text-2xl font-extrabold text-ink-900 dark:text-ink-dark sm:text-3xl">
             {searchQuery ? `Results for "${searchQuery}"` : "All Products"}
           </h1>
@@ -145,7 +145,7 @@ function Home() {
             {sortedProducts?.length ?? 0} products available
           </p>
         </div>
- 
+  */}
         <div className="flex flex-wrap items-center gap-3">
           <Select<SortOption>
             value={sort}

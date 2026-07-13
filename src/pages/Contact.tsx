@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Form, Input, message } from "antd";
-import { MailOutlined, PhoneOutlined, EnvironmentOutlined } from "@ant-design/icons";
+import {
+  MailOutlined,
+  PhoneOutlined,
+  EnvironmentOutlined,
+} from "@ant-design/icons";
 
 import Button from "../components/ui/Button";
 
@@ -43,9 +47,14 @@ function Contact() {
                 Thanks for reaching out!
               </h2>
               <p className="text-sm text-ink-600 dark:text-ink-400">
-                We've received your message and will reply within 1-2 business days.
+                We've received your message and will reply within 1-2 business
+                days.
               </p>
-              <Button variant="outline" className="mt-4" onClick={() => setSent(false)}>
+              <Button
+                variant="outline"
+                className="mt-4"
+                onClick={() => setSent(false)}
+              >
                 Send another message
               </Button>
             </div>
@@ -54,9 +63,34 @@ function Contact() {
               <Form.Item
                 label="Full name"
                 name="name"
-                rules={[{ required: true, message: "Please enter your name" }]}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter your name",
+                  },
+                  {
+                    pattern: /^[A-Za-z\s]{3,50}$/,
+                    message: "Name should contain only letters and spaces",
+                  },
+                ]}
               >
-                <Input placeholder="Jane Doe" />
+                <Input
+                  placeholder="Jane Doe"
+                  onKeyDown={(e) => {
+                    if (
+                      !/[a-zA-Z\s]/.test(e.key) &&
+                      ![
+                        "Backspace",
+                        "Delete",
+                        "ArrowLeft",
+                        "ArrowRight",
+                        "Tab",
+                      ].includes(e.key)
+                    ) {
+                      e.preventDefault();
+                    }
+                  }}
+                />
               </Form.Item>
 
               <Form.Item
@@ -65,6 +99,10 @@ function Contact() {
                 rules={[
                   { required: true, message: "Please enter your email" },
                   { type: "email", message: "Enter a valid email" },
+                  {
+                    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Enter a valid email",
+                  },
                 ]}
               >
                 <Input placeholder="you@example.com" />
@@ -73,9 +111,48 @@ function Contact() {
               <Form.Item
                 label="Message"
                 name="message"
-                rules={[{ required: true, message: "Please enter a message" }]}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please enter a message",
+                  },
+                  {
+                    min: 15,
+                    message: "Message should be at least 15 characters",
+                  },
+                  {
+                    max: 500,
+                    message: "Message cannot exceed 500 characters",
+                  },
+                  {
+                    validator(_, value) {
+                      if (!value) return Promise.resolve();
+
+                      const cleaned = value.trim();
+
+                      if (cleaned.length < 15) {
+                        return Promise.reject(
+                          new Error("Please provide more details"),
+                        );
+                      }
+
+                      if (/^([a-zA-Z0-9])\1+$/.test(cleaned)) {
+                        return Promise.reject(
+                          new Error("Please enter a meaningful message"),
+                        );
+                      }
+
+                      return Promise.resolve();
+                    },
+                  },
+                ]}
               >
-                <Input.TextArea rows={5} placeholder="How can we help?" />
+                <Input.TextArea
+                  rows={5}
+                  placeholder="How can we help?"
+                  showCount
+                  maxLength={500}
+                />
               </Form.Item>
 
               <Button
@@ -102,7 +179,9 @@ function Contact() {
               <div className="flex items-start gap-3">
                 <MailOutlined className="mt-0.5 text-brand-500" />
                 <div>
-                  <p className="font-medium text-ink-900 dark:text-ink-dark">Email</p>
+                  <p className="font-medium text-ink-900 dark:text-ink-dark">
+                    Email
+                  </p>
                   <p>support@e-shop.com</p>
                 </div>
               </div>
@@ -110,7 +189,9 @@ function Contact() {
               <div className="flex items-start gap-3">
                 <PhoneOutlined className="mt-0.5 text-brand-500" />
                 <div>
-                  <p className="font-medium text-ink-900 dark:text-ink-dark">Phone</p>
+                  <p className="font-medium text-ink-900 dark:text-ink-dark">
+                    Phone
+                  </p>
                   <p>+1 (555) 123-4567</p>
                 </div>
               </div>
@@ -118,7 +199,9 @@ function Contact() {
               <div className="flex items-start gap-3">
                 <EnvironmentOutlined className="mt-0.5 text-brand-500" />
                 <div>
-                  <p className="font-medium text-ink-900 dark:text-ink-dark">Address</p>
+                  <p className="font-medium text-ink-900 dark:text-ink-dark">
+                    Address
+                  </p>
                   <p>123 Market Street, San Francisco, CA</p>
                 </div>
               </div>
