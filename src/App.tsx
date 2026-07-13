@@ -15,6 +15,7 @@ import ProtectedRoute from "./components/auth/ProtectedRoute";
 import PublicOnlyRoute from "./components/auth/PublicOnlyRoute";
 import AppLayout from "./components/layout/AppLayout";
 import Contact from "./pages/Contact";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/profile" element={<Profile />} />
               </Route>
             </Routes>
           </AuthProvider>

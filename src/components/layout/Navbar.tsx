@@ -76,7 +76,7 @@ function Navbar() {
       key: "profile",
       label: "Profile",
       icon: <UserOutlined />,
-      onClick: () => message.info("Profile page coming soon"),
+      onClick: () => navigate("/profile"),
     },
     {
       key: "settings",
@@ -100,7 +100,7 @@ function Navbar() {
         {/* Left: logo, pinned to the far left */}
         <Link
           to="/"
-          className="flex flex-shrink-0 items-center gap-2 font-display text-lg font-extrabold text-brand-600 hover:text-brand-700"
+          className="flex shrink-0 items-center gap-2 font-display text-lg font-extrabold text-brand-600 hover:text-brand-700"
         >
           <ShoppingCartOutlined className="text-xl" />
           <span>E-Shop</span>
@@ -115,7 +115,7 @@ function Navbar() {
               placeholder="Search for products, brands and more"
               prefix={<SearchOutlined className="text-gray-400" />}
               allowClear
-              className="!rounded-full"
+              className="rounded-full!"
             />
           </div>
         </div>
@@ -123,7 +123,7 @@ function Navbar() {
         <div className="flex-1 md:hidden" />
 
         {/* Right: theme toggle, cart, account - icon-only, pinned right */}
-        <div className="hidden flex-shrink-0 items-center gap-6 md:flex">
+        <div className="hidden shrink-0 items-center gap-6 md:flex">
           <button
             type="button"
             onClick={toggleTheme}
@@ -151,7 +151,7 @@ function Navbar() {
               <button
                 type="button"
                 aria-label="Account menu"
-                className="icon-btn !w-auto gap-3 px-2"
+                className="icon-btn w-auto! gap-3 px-2"
               >
                 <Avatar size="small" icon={<UserOutlined />} />
                 <DownOutlined className="text-xs" />
@@ -164,7 +164,7 @@ function Navbar() {
         <button
           type="button"
           aria-label="Open menu"
-          className="flex flex-shrink-0 items-center justify-center rounded-md p-2 text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800 md:hidden"
+          className="flex shrink-0 items-center justify-center rounded-md p-2 text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800 md:hidden"
           onClick={() => setMobileOpen(true)}
         >
           <MenuOutlined className="text-xl" />
@@ -179,7 +179,7 @@ function Navbar() {
           placeholder="Search products"
           prefix={<SearchOutlined className="text-gray-400" />}
           allowClear
-          className="!rounded-full"
+          className="rounded-full!"
         />
       </div>
 
