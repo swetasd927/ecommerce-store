@@ -19,7 +19,7 @@ function ProductDetails() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-7xl animate-pulse p-6 sm:p-8">
+      <div className="w-full animate-pulse p-6 sm:p-8">
         <div className="grid gap-8 md:grid-cols-2">
           <div className="skeleton-tile aspect-square rounded-xl" />
           <div className="flex flex-col gap-3">
@@ -51,7 +51,7 @@ function ProductDetails() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl p-4 sm:p-8">
+    <div className="w-full p-4 sm:p-8">
       <Link
         to="/"
         className="text-ink-secondary mb-6 inline-flex items-center gap-1 text-sm font-medium hover:text-brand-600 dark:hover:text-brand-500"
