@@ -4,7 +4,7 @@ import { ConfigProvider, message, theme as antdTheme } from "antd";
 import { useTheme } from "../hooks/useTheme";
 
 function AntdThemeBridge({ children }: { children: ReactNode }) {
-  const { theme } = useTheme();
+  const { theme, primaryColor, radius } = useTheme();
   const isDark = theme === "dark";
 
   useEffect(() => {
@@ -16,8 +16,8 @@ function AntdThemeBridge({ children }: { children: ReactNode }) {
       theme={{
         algorithm: isDark ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
         token: {
-          colorPrimary: "#2541b2",
-          borderRadius: 8,
+          colorPrimary: primaryColor,
+          borderRadius: radius === "none" ? 0 : radius === "full" ? 24 : radius === "lg" ? 16 : radius === "sm" ? 6 : 10,
           colorBgContainer: isDark ? "#111827" : "#ffffff",
           colorBgElevated: isDark ? "#111827" : "#ffffff",
           colorBgLayout: isDark ? "#0b0f19" : "#f4f5f7",

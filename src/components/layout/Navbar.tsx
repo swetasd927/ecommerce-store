@@ -18,6 +18,10 @@ import { useCart } from "../../hooks/useCart";
 import { useTheme } from "../../hooks/useTheme";
 import { cn } from "../../lib/cn";
 
+import { Popover } from "antd";
+import { SettingOutlined } from "@ant-design/icons";
+import ThemeCustomizer from "../../settings/themeCustomizer";
+
 const SEARCH_DEBOUNCE_MS = 400;
 
 function Navbar() {
@@ -131,7 +135,8 @@ function Navbar() {
             aria-label="Cart"
             className={cn(
               "icon-btn",
-              isCartActive && "bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-500",
+              isCartActive &&
+                "bg-brand-50 text-brand-600 dark:bg-brand-500/10 dark:text-brand-500",
             )}
           >
             <Badge count={totalItems} size="small" offset={[2, -2]}>
@@ -140,7 +145,11 @@ function Navbar() {
           </Link>
 
           {user && (
-            <Dropdown menu={{ items: accountMenuItems }} trigger={["hover"]} placement="bottomRight">
+            <Dropdown
+              menu={{ items: accountMenuItems }}
+              trigger={["hover"]}
+              placement="bottomRight"
+            >
               <button
                 type="button"
                 aria-label="Account menu"
@@ -188,7 +197,9 @@ function Navbar() {
           {user && (
             <div className="mb-4 flex items-center gap-3 rounded-md bg-gray-50 p-3 dark:bg-gray-800">
               <Avatar icon={<UserOutlined />} />
-              <span className="font-medium text-ink-900 dark:text-ink-dark">{user.username}</span>
+              <span className="font-medium text-ink-900 dark:text-ink-dark">
+                {user.username}
+              </span>
             </div>
           )}
 
@@ -230,6 +241,21 @@ function Navbar() {
           >
             <UserOutlined /> Profile
           </button>
+
+          <Popover
+            content={<ThemeCustomizer />}
+            trigger="click"
+            placement="bottomRight"
+            arrow={false}
+          >
+            <button
+              type="button"
+              aria-label="Customize theme"
+              className="icon-btn"
+            >
+              <SettingOutlined />
+            </button>
+          </Popover>
 
           <button
             type="button"
