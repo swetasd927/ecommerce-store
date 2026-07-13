@@ -102,7 +102,7 @@ function Checkout() {
               <Input placeholder="123 Main Street" />
             </Form.Item>
 
-            <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Form.Item
                 label="City"
                 name="city"
@@ -138,7 +138,7 @@ function Checkout() {
               <Input placeholder="4242 4242 4242 4242" maxLength={16} />
             </Form.Item>
 
-            <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Form.Item
                 label="Expiry (MM/YY)"
                 name="expiry"
@@ -175,7 +175,7 @@ function Checkout() {
           </Form>
         </div>
 
-        <div className="w-full flex-shrink-0 lg:sticky lg:top-24 lg:w-80">
+        <div className="w-full shrink-0 lg:sticky lg:top-24 lg:w-80">
           <div className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
             <h2 className="font-display text-base font-bold uppercase tracking-wide text-ink-600 dark:text-ink-400">
               Order Summary
@@ -188,9 +188,9 @@ function Checkout() {
                   className="flex justify-between text-sm text-ink-600 dark:text-ink-400"
                 >
                   <span className="line-clamp-1 pr-2">
-                    {item.product.title} × {item.quantity}
+                    {item.product.title}  {item.quantity}
                   </span>
-                  <span className="flex-shrink-0 font-medium text-ink-900 dark:text-ink-dark">
+                  <span className="shrink-0 font-medium text-ink-900 dark:text-ink-dark">
                     ${(item.product.price * item.quantity).toFixed(2)}
                   </span>
                 </div>
