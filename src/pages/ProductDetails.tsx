@@ -112,7 +112,6 @@ function ProductDetails() {
               onClick={handleAddToCart}
               className="flex-1 min-w-40"
             >
-              Add to Cart
             </Button>
           </div>
         </AnimateIn>
