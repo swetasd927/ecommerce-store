@@ -76,11 +76,24 @@ function Checkout() {
             </h2>
 
             <Form.Item
-              label="Full name"
+              label="Full Name"
               name="fullName"
-              rules={[{ required: true, message: "Please enter your full name" }]}
+              rules={[
+                { required: true, message: "Please enter your full name" },
+                {
+                  pattern: /^[A-Za-z\s]{3,50}$/,
+                  message: "Only letters and spaces allowed",
+                },
+              ]}
             >
-              <Input placeholder="Jane Doe" />
+              <Input
+                placeholder="Jane Doe"
+                onKeyPress={(e) => {
+                  if (!/[a-zA-Z\s]/.test(e.key)) {
+                    e.preventDefault();
+                  }
+                }}
+              />
             </Form.Item>
 
             <Form.Item
@@ -88,7 +101,10 @@ function Checkout() {
               name="email"
               rules={[
                 { required: true, message: "Please enter your email" },
-                { type: "email", message: "Enter a valid email" },
+                {
+                  type: "email",
+                  message: "Please enter a valid email",
+                },
               ]}
             >
               <Input placeholder="you@example.com" />
@@ -97,26 +113,48 @@ function Checkout() {
             <Form.Item
               label="Address"
               name="address"
-              rules={[{ required: true, message: "Please enter your address" }]}
+              rules={[
+                { required: true, message: "Please enter your address" },
+                {
+                  min: 10,
+                  message: "Address is too short",
+                },
+              ]}
             >
               <Input placeholder="123 Main Street" />
             </Form.Item>
 
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Form.Item
                 label="City"
                 name="city"
-                rules={[{ required: true, message: "Required" }]}
+                rules={[
+                  { required: true, message: "Required" },
+                  {
+                    pattern: /^[A-Za-z\s]{2,30}$/,
+                    message: "Invalid city name",
+                  },
+                ]}
               >
-                <Input placeholder="City" />
+                <Input
+                  placeholder="City"
+                  onKeyPress={(e) => {
+                    if (!/[a-zA-Z\s]/.test(e.key)) {
+                      e.preventDefault();
+                    }
+                  }}
+                />
               </Form.Item>
 
               <Form.Item
                 label="Postal code"
                 name="postalCode"
                 rules={[
-                  { required: true, message: "Required" },
-                  { pattern: /^[A-Za-z0-9\- ]{3,10}$/, message: "Invalid postal code" },
+                  { required: true },
+                  {
+                    pattern: /^\d{5}$/,
+                    message: "Postal code must be 5 digits",
+                  },
                 ]}
               >
                 <Input placeholder="00000" />
@@ -128,34 +166,112 @@ function Checkout() {
             </h2>
 
             <Form.Item
-              label="Card number"
+              label="Card Number"
               name="cardNumber"
               rules={[
-                { required: true, message: "Please enter your card number" },
-                { pattern: /^\d{16}$/, message: "Card number must be 16 digits" },
+                {
+                  required: true,
+                  message: "Please enter your card number",
+                },
+                {
+                  validator(_, value) {
+                    if (!value)
+                      return Promise.reject(new Error("Card number required"));
+
+                    const digits = value.replace(/\s/g, "");
+
+                    if (!/^\d{16}$/.test(digits)) {
+                      return Promise.reject(
+                        new Error("Card number must be 16 digits"),
+                      );
+                    }
+
+                    return Promise.resolve();
+                  },
+                },
               ]}
             >
-              <Input placeholder="4242 4242 4242 4242" maxLength={16} />
+              <Input
+                placeholder="4242 4242 4242 4242"
+                maxLength={19}
+                onChange={(e) => {
+                  const value = e.target.value
+                    .replace(/\D/g, "")
+                    .slice(0, 16)
+                    .replace(/(.{4})/g, "$1 ")
+                    .trim();
+
+                  form.setFieldValue("cardNumber", value);
+                }}
+              />
             </Form.Item>
 
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <Form.Item
                 label="Expiry (MM/YY)"
                 name="expiry"
                 rules={[
-                  { required: true, message: "Required" },
-                  { pattern: /^(0[1-9]|1[0-2])\/\d{2}$/, message: "Use MM/YY format" },
+                  {
+                    required: true,
+                    message: "Expiry date is required",
+                  },
+                  {
+                    validator(_, value) {
+                      if (!value) {
+                        return Promise.reject(
+                          new Error("Expiry date is required"),
+                        );
+                      }
+
+                      const match = value.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+
+                      if (!match) {
+                        return Promise.reject(new Error("Use MM/YY format"));
+                      }
+
+                      const month = Number(match[1]);
+                      const year = Number(`20${match[2]}`);
+
+                      const today = new Date();
+                      const currentMonth = today.getMonth() + 1;
+                      const currentYear = today.getFullYear();
+
+                      if (
+                        year < currentYear ||
+                        (year === currentYear && month < currentMonth)
+                      ) {
+                        return Promise.reject(new Error("Card has expired"));
+                      }
+
+                      return Promise.resolve();
+                    },
+                  },
                 ]}
               >
-                <Input placeholder="MM/YY" maxLength={5} />
+                <Input
+                  placeholder="MM/YY"
+                  maxLength={5}
+                  onChange={(e) => {
+                    let value = e.target.value.replace(/\D/g, "");
+
+                    if (value.length > 2) {
+                      value = value.slice(0, 2) + "/" + value.slice(2, 4);
+                    }
+
+                    form.setFieldValue("expiry", value);
+                  }}
+                />
               </Form.Item>
 
               <Form.Item
                 label="CVC"
                 name="cvc"
                 rules={[
-                  { required: true, message: "Required" },
-                  { pattern: /^\d{3,4}$/, message: "Invalid CVC" },
+                  { required: true },
+                  {
+                    pattern: /^\d{3,4}$/,
+                    message: "CVC must be 3 or 4 digits",
+                  },
                 ]}
               >
                 <Input placeholder="123" maxLength={4} />
@@ -170,7 +286,9 @@ function Checkout() {
               disabled={submitting}
               className="mt-2"
             >
-              {submitting ? "Placing order…" : `Place Order · $${totalPrice.toFixed(2)}`}
+              {submitting
+                ? "Placing order…"
+                : `Place Order · $${totalPrice.toFixed(2)}`}
             </Button>
           </Form>
         </div>
@@ -188,7 +306,7 @@ function Checkout() {
                   className="flex justify-between text-sm text-ink-600 dark:text-ink-400"
                 >
                   <span className="line-clamp-1 pr-2">
-                    {item.product.title}  {item.quantity}
+                    {item.product.title} × {item.quantity}
                   </span>
                   <span className="shrink-0 font-medium text-ink-900 dark:text-ink-dark">
                     ${(item.product.price * item.quantity).toFixed(2)}

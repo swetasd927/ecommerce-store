@@ -2,19 +2,58 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * RUNTIME theme variables.
+ */
+:root {
+  --primary-50: #eef1fc;  --primary-100: #dbe1f8; --primary-200: #b3c0ee;
+  --primary-300: #8a9fe4; --primary-400: #4d6bd6; --primary-500: #2541b2;
+  --primary-600: #1f379a; --primary-700: #1b2f80; --primary-800: #172868;
+  --primary-900: #142253; --primary-950: #0d1836;
+  --primary-base: #2541b2;
+
+  --secondary-50: #fff1f1;  --secondary-100: #ffe0e1; --secondary-200: #ffc2c4;
+  --secondary-300: #ff9fa2; --secondary-400: #ff7a7f; --secondary-500: #ff5a5f;
+  --secondary-600: #e6474c; --secondary-700: #c93a3f; --secondary-800: #a62f33;
+  --secondary-900: #85272a; --secondary-950: #591a1c;
+  --secondary-base: #ff5a5f;
+
+  --radius-base: 10px;
+  --shadow-base: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 1px rgba(15, 23, 42, 0.04);
+}
+
 @theme {
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-display: "Manrope", system-ui, sans-serif;
+  --font-sans: "Satoshi", "Inter", system-ui, sans-serif;
+  --font-display: "Satoshi", "Manrope", system-ui, sans-serif;
 
-  --color-brand-50: #eef1fc;
-  --color-brand-100: #dbe1f8;
-  --color-brand-500: #2541b2;
-  --color-brand-600: #1f379a;
-  --color-brand-700: #1b2f80;
+  --color-brand-50: var(--primary-50);     --color-primary-50: var(--primary-50);
+  --color-brand-100: var(--primary-100);   --color-primary-100: var(--primary-100);
+  --color-brand-200: var(--primary-200);   --color-primary-200: var(--primary-200);
+  --color-brand-300: var(--primary-300);   --color-primary-300: var(--primary-300);
+  --color-brand-400: var(--primary-400);   --color-primary-400: var(--primary-400);
+  --color-brand-500: var(--primary-500);   --color-primary-500: var(--primary-500);
+  --color-brand-600: var(--primary-600);   --color-primary-600: var(--primary-600);
+  --color-brand-700: var(--primary-700);   --color-primary-700: var(--primary-700);
+  --color-brand-800: var(--primary-800);   --color-primary-800: var(--primary-800);
+  --color-brand-900: var(--primary-900);   --color-primary-900: var(--primary-900);
+  --color-brand-950: var(--primary-950);   --color-primary-950: var(--primary-950);
 
-  --color-accent-50: #fff1f1;
-  --color-accent-500: #ff5a5f;
-  --color-accent-600: #e6474c;
+  --color-accent-50: var(--secondary-50);    --color-secondary-50: var(--secondary-50);
+  --color-accent-100: var(--secondary-100);  --color-secondary-100: var(--secondary-100);
+  --color-accent-200: var(--secondary-200);  --color-secondary-200: var(--secondary-200);
+  --color-accent-300: var(--secondary-300);  --color-secondary-300: var(--secondary-300);
+  --color-accent-400: var(--secondary-400);  --color-secondary-400: var(--secondary-400);
+  --color-accent-500: var(--secondary-500);  --color-secondary-500: var(--secondary-500);
+  --color-accent-600: var(--secondary-600);  --color-secondary-600: var(--secondary-600);
+  --color-accent-700: var(--secondary-700);  --color-secondary-700: var(--secondary-700);
+  --color-accent-800: var(--secondary-800);  --color-secondary-800: var(--secondary-800);
+  --color-accent-900: var(--secondary-900);  --color-secondary-900: var(--secondary-900);
+  --color-accent-950: var(--secondary-950);  --color-secondary-950: var(--secondary-950);
+
+  --color-success-50: #f0fdf4; --color-success-500: #22c55e; --color-success-600: #16a34a; --color-success-700: #15803d;
+  --color-danger-50: #fef2f2;  --color-danger-500: #ef4444;  --color-danger-600: #dc2626;  --color-danger-700: #b91c1c;
+  --color-warning-50: #fffbeb; --color-warning-500: #f59e0b; --color-warning-600: #d97706; --color-warning-700: #b45309;
+  --color-neutral-50: #f9fafb; --color-neutral-500: #6b7280;  --color-neutral-600: #4b5563; --color-neutral-700: #374151;
 
   --color-ink-900: #111827;
   --color-ink-600: #4b5563;
@@ -23,6 +62,9 @@
   --color-surface-muted: #f4f5f7;
   --color-surface-dark: #0b0f19;
   --color-ink-dark: #e5e7eb;
+
+  --radius-theme: var(--radius-base);
+  --shadow-theme: var(--shadow-base);
 }
 
 html {
@@ -42,16 +84,6 @@ body {
   color: var(--color-ink-dark);
 }
 
-/*
- * Reusable dark-mode-aware tokens.
- * Define each light/dark pair ONCE here, then use the class name
- * everywhere instead of retyping `bg-white dark:bg-gray-900` etc.
- *
- * NOTE: Tailwind v4 requires @utility (not @layer components) for any
- * class that will itself be referenced inside another @apply below.
- */
-
-/* --- backgrounds --- */
 @utility surface-page {
   @apply bg-surface-muted dark:bg-surface-dark;
 }
@@ -68,7 +100,6 @@ body {
   @apply border-gray-200 dark:border-gray-800;
 }
 
-/* --- skeleton/shimmer loading blocks --- */
 @utility skeleton-block {
   @apply bg-gray-200 dark:bg-gray-800;
 }
@@ -76,12 +107,10 @@ body {
   @apply bg-gray-100 dark:bg-gray-800;
 }
 
-/* Circular icon button - theme toggle, cart, account trigger all share this */
 @utility icon-btn {
   @apply flex h-9 w-9 items-center justify-center rounded-full text-lg text-ink-600 transition-colors hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800;
 }
 
-/* --- text colors --- */
 @utility text-ink-primary {
   @apply text-ink-900 dark:text-ink-dark;
 }
@@ -92,7 +121,13 @@ body {
   @apply text-brand-600 dark:text-brand-500;
 }
 
-/* --- product card: image badge + hover "Add to Cart" overlay --- */
+@utility rounded-theme {
+  border-radius: var(--radius-theme);
+}
+@utility shadow-theme {
+  box-shadow: var(--shadow-theme);
+}
+
 @utility product-card-badge {
   @apply bg-accent-500 absolute left-3 top-3 rounded-full px-2 py-0.5 text-xs font-semibold text-white;
 }
@@ -103,7 +138,19 @@ body {
   @apply bg-brand-500 hover:bg-brand-600 flex w-full items-center justify-center gap-2 rounded-lg py-2 text-sm font-medium text-white transition-colors;
 }
 
-/* --- footer --- */
+@utility status-success {
+  @apply bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-500;
+}
+@utility status-danger {
+  @apply bg-danger-50 text-danger-700 dark:bg-danger-500/10 dark:text-danger-500;
+}
+@utility status-warning {
+  @apply bg-warning-50 text-warning-700 dark:bg-warning-500/10 dark:text-warning-500;
+}
+@utility status-neutral {
+  @apply bg-neutral-50 text-neutral-700 dark:bg-neutral-500/10 dark:text-neutral-400;
+}
+
 @utility footer-wrap {
   @apply surface-card border-surface border-t;
 }

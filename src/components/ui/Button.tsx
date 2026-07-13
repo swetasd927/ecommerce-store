@@ -20,7 +20,7 @@ const VARIANT_STYLES: Record<ButtonVariant, string> = {
   outline:
     "border border-gray-300 bg-transparent text-ink-900 hover:border-brand-500 hover:text-brand-600 dark:border-gray-700 dark:text-ink-dark dark:hover:border-brand-500 dark:hover:text-brand-500",
   danger:
-    "bg-accent-500 text-white hover:bg-accent-600 dark:bg-accent-500 dark:hover:bg-accent-600",
+    "bg-danger-500 text-white hover:bg-danger-600 dark:bg-danger-600 dark:hover:bg-danger-700",
 };
 
 const SIZE_STYLES: Record<ButtonSize, string> = {
@@ -30,9 +30,7 @@ const SIZE_STYLES: Record<ButtonSize, string> = {
 };
 
 /**
- * Base reusable button. Prefer this over one-off <button> markup or a fresh
- * Tailwind class list per usage - pick a variant + size and pass any extra
- * className, which merges safely via cn() (clsx + tailwind-merge).
+ * Base reusable button. 
  */
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -52,7 +50,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         disabled={disabled}
         className={cn(
-          "inline-flex items-center justify-center gap-2 rounded-full font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          "rounded-theme shadow-theme inline-flex items-center justify-center gap-2 font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none",
           VARIANT_STYLES[variant],
           SIZE_STYLES[size],
           fullWidth && "w-full",
