@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button, InputNumber, Rate, message, Image } from "antd";
-import {
-  ShoppingCartOutlined,
-  LeftOutlined,
-  ZoomInOutlined,
-} from "@ant-design/icons";
+import { Button, InputNumber, Rate, message } from "antd";
+import { ShoppingCartOutlined, LeftOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 
 import { useProduct } from "../hooks/useProduct";
 import { useCart } from "../hooks/useCart";
 import RelatedProducts from "../components/product/RelatedProducts";
+import ZoomImage from "../components/product/ZoomImage";
 import { fadeUp, scaleIn } from "../lib/motion";
 
 function ProductDetails() {
@@ -69,18 +66,7 @@ function ProductDetails() {
           animate="visible"
           variants={scaleIn}
         >
-          <Image
-            src={product.image}
-            alt={product.title}
-            className="h-full! w-full! object-contain!"
-            preview={{
-              mask: (
-                <span className="flex items-center gap-2 text-sm font-medium">
-                  <ZoomInOutlined /> Click to zoom
-                </span>
-              ),
-            }}
-          />
+          <ZoomImage src={product.image} alt={product.title} zoomLevel={2} />
         </motion.div>
 
         <motion.div
@@ -133,7 +119,7 @@ function ProductDetails() {
               onClick={handleAddToCart}
               className="flex-1 min-w-40"
             >
-              Add to Cart
+             
             </Button>
           </div>
         </motion.div>
