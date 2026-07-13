@@ -1,12 +1,11 @@
 ﻿import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Drawer, Avatar, Badge, Input, Dropdown, Button, message } from "antd";
+import { Drawer, Avatar, Badge, Input, Dropdown, Button } from "antd";
 import type { MenuProps } from "antd";
 import {
   ShoppingCartOutlined,
   UserOutlined,
   LogoutOutlined,
-  SettingOutlined,
   MenuOutlined,
   SearchOutlined,
   BulbOutlined,
@@ -77,12 +76,6 @@ function Navbar() {
       label: "Profile",
       icon: <UserOutlined />,
       onClick: () => navigate("/profile"),
-    },
-    {
-      key: "settings",
-      label: "Settings",
-      icon: <SettingOutlined />,
-      onClick: () => message.info("Settings page coming soon"),
     },
     { type: "divider" },
     {
@@ -230,23 +223,12 @@ function Navbar() {
           <button
             type="button"
             onClick={() => {
-              message.info("Profile page");
+              navigate("/profile");
               setMobileOpen(false);
             }}
             className="flex items-center gap-3 rounded-md px-3 py-2 text-left text-sm font-medium text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
           >
             <UserOutlined /> Profile
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              message.info("Settings page");
-              setMobileOpen(false);
-            }}
-            className="flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
-          >
-            <SettingOutlined /> Settings
           </button>
 
           <button
