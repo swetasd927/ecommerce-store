@@ -38,11 +38,12 @@ function ProductCard({ product }: ProductCardProps) {
   return (
     <Link
       to={`/product/${product.id}`}
-      className="group flex h-full flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-black/30"
+      className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:hover:shadow-black/30"
     >
-      <div className="relative flex aspect-square w-full shrink-0 items-center justify-center bg-white p-6 dark:bg-gray-950">
+      {/* IMAGE CONTAINER — fixed height, identical on every card */}
+      <div className="relative h-56 w-full shrink-0 bg-white p-5 dark:bg-gray-950 sm:h-60">
         {product.rating.rate >= 4.5 && (
-          <span className="absolute left-3 top-3 rounded-full bg-accent-500 px-2 py-0.5 text-xs font-semibold text-white">
+          <span className="absolute left-3 top-3 z-10 rounded-full bg-accent-500 px-2 py-0.5 text-xs font-semibold text-white">
             Top Rated
           </span>
         )}
@@ -52,7 +53,7 @@ function ProductCard({ product }: ProductCardProps) {
           onClick={handleToggleWishlist}
           aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
           aria-pressed={wishlisted}
-          className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-base text-ink-600 shadow-sm transition-colors hover:text-accent-500 dark:bg-gray-900/90 dark:text-ink-400"
+          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-base text-ink-600 shadow-sm transition-colors hover:text-accent-500 dark:bg-gray-900/90 dark:text-ink-400"
         >
           {wishlisted ? (
             <HeartFilled className="text-accent-500" />
@@ -64,16 +65,15 @@ function ProductCard({ product }: ProductCardProps) {
         <ProductImage src={product.image} alt={product.title} />
       </div>
 
-      <div className="flex flex-1 flex-col gap-1.5 border-t border-gray-100 p-4 dark:border-gray-800">
-        <h2 className="line-clamp-2 min-h-10 text-sm font-medium leading-5 text-ink-900 dark:text-ink-dark">
+      {/* DESCRIPTION CONTAINER — fixed height, identical on every card */}
+      <div className="flex h-36 flex-col gap-1.5 border-t border-gray-100 p-4 dark:border-gray-800">
+        <h2 className="line-clamp-2 text-sm font-medium leading-5 text-ink-900 dark:text-ink-dark">
           {product.title}
         </h2>
 
-        <div className="min-h-5">
-          <ProductRating rate={product.rating.rate} count={product.rating.count} />
-        </div>
+        <ProductRating rate={product.rating.rate} count={product.rating.count} />
 
-        <div className="mt-auto flex items-center justify-between gap-2 pt-3">
+        <div className="mt-auto flex items-center justify-between gap-2">
           <p className="text-lg font-bold text-ink-900 dark:text-ink-dark">
             ${product.price.toFixed(2)}
           </p>

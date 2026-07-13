@@ -37,7 +37,7 @@ function Cart() {
         </div>
 
         {/* Sticky order summary */}
-        <div className="w-full flex-shrink-0 lg:sticky lg:top-24 lg:w-80">
+        <div className="w-full shrink-0 lg:sticky lg:top-24 lg:w-80">
           <div className="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
             <h2 className="font-display text-base font-bold uppercase tracking-wide text-ink-600 dark:text-ink-400">
               Order Summary

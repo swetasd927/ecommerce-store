@@ -1,16 +1,13 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Button, InputNumber, Rate, message, Image } from "antd";
-import {
-  ShoppingCartOutlined,
-  LeftOutlined,
-  ZoomInOutlined,
-} from "@ant-design/icons";
-import { motion } from "framer-motion";
+import { Button, InputNumber, Rate, message } from "antd";
+import { ShoppingCartOutlined, LeftOutlined } from "@ant-design/icons";
 
 import { useProduct } from "../hooks/useProduct";
 import { useCart } from "../hooks/useCart";
 import RelatedProducts from "../components/product/RelatedProducts";
+import ZoomImage from "../components/product/ZoomImage";
+import AnimateIn from "../components/common/AnimateIn";
 import { fadeUp, scaleIn } from "../lib/motion";
 
 function ProductDetails() {
@@ -22,7 +19,7 @@ function ProductDetails() {
 
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-7xl animate-pulse p-6 sm:p-8">
+      <div className="w-full animate-pulse p-6 sm:p-8">
         <div className="grid gap-8 md:grid-cols-2">
           <div className="skeleton-tile aspect-square rounded-xl" />
           <div className="flex flex-col gap-3">
@@ -54,7 +51,7 @@ function ProductDetails() {
   };
 
   return (
-    <div className="mx-auto max-w-7xl p-4 sm:p-8">
+    <div className="w-full p-4 sm:p-8">
       <Link
         to="/"
         className="text-ink-secondary mb-6 inline-flex items-center gap-1 text-sm font-medium hover:text-brand-600 dark:hover:text-brand-500"
@@ -63,32 +60,14 @@ function ProductDetails() {
       </Link>
 
       <div className="surface-card border-surface grid gap-8 rounded-xl border p-6 md:grid-cols-2 md:p-8">
-        <motion.div
-          className="surface-inset group relative mx-auto flex aspect-square w-full max-h-130  max-w-130 items-center justify-center rounded-lg p-8"
-          initial="hidden"
-          animate="visible"
+        <AnimateIn
           variants={scaleIn}
+          className="surface-inset group relative mx-auto flex aspect-square w-full max-h-130 max-w-130 items-center justify-center rounded-lg p-8"
         >
-          <Image
-            src={product.image}
-            alt={product.title}
-            className="h-full! w-full! object-contain!"
-            preview={{
-              mask: (
-                <span className="flex items-center gap-2 text-sm font-medium">
-                  <ZoomInOutlined /> Click to zoom
-                </span>
-              ),
-            }}
-          />
-        </motion.div>
+          <ZoomImage src={product.image} alt={product.title} zoomLevel={2} />
+        </AnimateIn>
 
-        <motion.div
-          className="flex flex-col justify-center"
-          initial="hidden"
-          animate="visible"
-          variants={fadeUp}
-        >
+        <AnimateIn variants={fadeUp} className="flex flex-col justify-center">
           <span className="text-brand-accent text-xs font-semibold uppercase tracking-wide">
             {product.category}
           </span>
@@ -136,7 +115,7 @@ function ProductDetails() {
               Add to Cart
             </Button>
           </div>
-        </motion.div>
+        </AnimateIn>
       </div>
       <RelatedProducts
         category={product.category}
