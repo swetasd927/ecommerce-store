@@ -1,12 +1,11 @@
 ﻿import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Drawer, Avatar, Badge, Input, Dropdown, Button, message } from "antd";
+import { Drawer, Avatar, Badge, Input, Dropdown, Button } from "antd";
 import type { MenuProps } from "antd";
 import {
   ShoppingCartOutlined,
   UserOutlined,
   LogoutOutlined,
-  SettingOutlined,
   MenuOutlined,
   SearchOutlined,
   BulbOutlined,
@@ -76,13 +75,7 @@ function Navbar() {
       key: "profile",
       label: "Profile",
       icon: <UserOutlined />,
-      onClick: () => message.info("Profile page coming soon"),
-    },
-    {
-      key: "settings",
-      label: "Settings",
-      icon: <SettingOutlined />,
-      onClick: () => message.info("Settings page coming soon"),
+      onClick: () => navigate("/profile"),
     },
     { type: "divider" },
     {
@@ -100,7 +93,7 @@ function Navbar() {
         {/* Left: logo, pinned to the far left */}
         <Link
           to="/"
-          className="flex flex-shrink-0 items-center gap-2 font-display text-lg font-extrabold text-brand-600 hover:text-brand-700"
+          className="flex shrink-0 items-center gap-2 font-display text-lg font-extrabold text-brand-600 hover:text-brand-700"
         >
           <ShoppingCartOutlined className="text-xl" />
           <span>E-Shop</span>
@@ -115,7 +108,7 @@ function Navbar() {
               placeholder="Search for products, brands and more"
               prefix={<SearchOutlined className="text-gray-400" />}
               allowClear
-              className="!rounded-full"
+              className="rounded-full!"
             />
           </div>
         </div>
@@ -123,7 +116,7 @@ function Navbar() {
         <div className="flex-1 md:hidden" />
 
         {/* Right: theme toggle, cart, account - icon-only, pinned right */}
-        <div className="hidden flex-shrink-0 items-center gap-6 md:flex">
+        <div className="hidden shrink-0 items-center gap-6 md:flex">
           <button
             type="button"
             onClick={toggleTheme}
@@ -151,7 +144,7 @@ function Navbar() {
               <button
                 type="button"
                 aria-label="Account menu"
-                className="icon-btn !w-auto gap-3 px-2"
+                className="icon-btn w-auto! gap-3 px-2"
               >
                 <Avatar size="small" icon={<UserOutlined />} />
                 <DownOutlined className="text-xs" />
@@ -164,7 +157,7 @@ function Navbar() {
         <button
           type="button"
           aria-label="Open menu"
-          className="flex flex-shrink-0 items-center justify-center rounded-md p-2 text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800 md:hidden"
+          className="flex shrink-0 items-center justify-center rounded-md p-2 text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800 md:hidden"
           onClick={() => setMobileOpen(true)}
         >
           <MenuOutlined className="text-xl" />
@@ -179,7 +172,7 @@ function Navbar() {
           placeholder="Search products"
           prefix={<SearchOutlined className="text-gray-400" />}
           allowClear
-          className="!rounded-full"
+          className="rounded-full!"
         />
       </div>
 
@@ -230,23 +223,12 @@ function Navbar() {
           <button
             type="button"
             onClick={() => {
-              message.info("Profile page");
+              navigate("/profile");
               setMobileOpen(false);
             }}
             className="flex items-center gap-3 rounded-md px-3 py-2 text-left text-sm font-medium text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
           >
             <UserOutlined /> Profile
-          </button>
-
-          <button
-            type="button"
-            onClick={() => {
-              message.info("Settings page");
-              setMobileOpen(false);
-            }}
-            className="flex items-center gap-2 rounded-md px-3 py-2 text-left text-sm font-medium text-ink-600 hover:bg-gray-100 dark:text-ink-400 dark:hover:bg-gray-800"
-          >
-            <SettingOutlined /> Settings
           </button>
 
           <button

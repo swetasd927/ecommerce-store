@@ -53,11 +53,13 @@ function Login() {
   };
 
   return (
-
-    <div className="flex min-h-screen items-center justify-center bg-surface-muted p-6 dark:bg-surface-dark">
+    <div className="flex min-h-screen items-start justify-center bg-surface-muted p-4 py-10 dark:bg-surface-dark sm:items-center sm:p-6">
       <div className="grid md:grid-cols-2 max-w-4xl w-full bg-white rounded-2xl shadow-xl overflow-hidden dark:bg-gray-900">
-        <div className="bg-brand-600 p-12 flex flex-col justify-center text-white">
-          <Title level={2} style={{ color: "white", fontFamily: "Manrope, sans-serif" }}>
+        <div className="bg-brand-600 p-8 sm:p-12 flex flex-col justify-center text-white">
+          <Title
+            level={2}
+            style={{ color: "white", fontFamily: "Manrope, sans-serif" }}
+          >
             E-Shop
           </Title>
 
@@ -66,7 +68,7 @@ function Login() {
           </Text>
         </div>
 
-        <div className="p-10">
+          <div className="p-6 sm:p-10">
           <Card variant="borderless">
             <Tabs
               activeKey={activeTab}
@@ -82,20 +84,32 @@ function Login() {
                         label="Username"
                         name="username"
                         rules={[
-                          { required: true, message: "Please enter your username" },
+                          {
+                            required: true,
+                            message: "Please enter your username",
+                          },
                         ]}
                       >
-                        <Input prefix={<UserOutlined />} placeholder="Enter username" />
+                        <Input
+                          prefix={<UserOutlined />}
+                          placeholder="Enter username"
+                        />
                       </Form.Item>
 
                       <Form.Item
                         label="Password"
                         name="password"
                         rules={[
-                          { required: true, message: "Please enter your password" },
+                          {
+                            required: true,
+                            message: "Please enter your password",
+                          },
                         ]}
                       >
-                        <Input.Password prefix={<LockOutlined />} placeholder="Enter password" />
+                        <Input.Password
+                          prefix={<LockOutlined />}
+                          placeholder="Enter password"
+                        />
                       </Form.Item>
 
                       <Button
@@ -113,13 +127,23 @@ function Login() {
                   key: "signup",
                   label: "Sign Up",
                   children: (
-                    <Form form={signupForm} layout="vertical" onFinish={handleSignup}>
+                    <Form
+                      form={signupForm}
+                      layout="vertical"
+                      onFinish={handleSignup}
+                    >
                       <Form.Item
                         label="First Name"
                         name="firstname"
                         rules={[
-                          { required: true, message: "Please enter your first name" },
-                          { pattern: /^[A-Za-z]+$/, message: "Only letters are allowed" },
+                          {
+                            required: true,
+                            message: "Please enter your first name",
+                          },
+                          {
+                            pattern: /^[A-Za-z]+$/,
+                            message: "Only letters are allowed",
+                          },
                         ]}
                       >
                         <Input prefix={<UserOutlined />} placeholder="John" />
@@ -129,8 +153,14 @@ function Login() {
                         label="Last Name"
                         name="lastname"
                         rules={[
-                          { required: true, message: "Please enter your last name" },
-                          { pattern: /^[A-Za-z]+$/, message: "Only letters are allowed" },
+                          {
+                            required: true,
+                            message: "Please enter your last name",
+                          },
+                          {
+                            pattern: /^[A-Za-z]+$/,
+                            message: "Only letters are allowed",
+                          },
                         ]}
                       >
                         <Input prefix={<UserOutlined />} placeholder="Doe" />
@@ -140,33 +170,57 @@ function Login() {
                         label="Username"
                         name="username"
                         rules={[
-                          { required: true, message: "Please choose a username" },
-                          { min: 4, message: "Username must be at least 4 characters" },
+                          {
+                            required: true,
+                            message: "Please choose a username",
+                          },
+                          {
+                            min: 4,
+                            message: "Username must be at least 4 characters",
+                          },
                         ]}
                       >
-                        <Input prefix={<UserOutlined />} placeholder="Choose a username" />
+                        <Input
+                          prefix={<UserOutlined />}
+                          placeholder="Choose a username"
+                        />
                       </Form.Item>
 
                       <Form.Item
                         label="Email"
                         name="email"
                         rules={[
-                          { required: true, message: "Please enter your email" },
+                          {
+                            required: true,
+                            message: "Please enter your email",
+                          },
                           { type: "email", message: "Enter a valid email" },
                         ]}
                       >
-                        <Input prefix={<MailOutlined />} placeholder="you@example.com" />
+                        <Input
+                          prefix={<MailOutlined />}
+                          placeholder="you@example.com"
+                        />
                       </Form.Item>
 
                       <Form.Item
                         label="Password"
                         name="password"
                         rules={[
-                          { required: true, message: "Please choose a password" },
-                          { min: 6, message: "Password must be at least 6 characters" },
+                          {
+                            required: true,
+                            message: "Please choose a password",
+                          },
+                          {
+                            min: 6,
+                            message: "Password must be at least 6 characters",
+                          },
                         ]}
                       >
-                        <Input.Password prefix={<LockOutlined />} placeholder="Choose a password" />
+                        <Input.Password
+                          prefix={<LockOutlined />}
+                          placeholder="Choose a password"
+                        />
                       </Form.Item>
 
                       <Form.Item
@@ -174,18 +228,29 @@ function Login() {
                         name="confirmPassword"
                         dependencies={["password"]}
                         rules={[
-                          { required: true, message: "Please confirm your password" },
+                          {
+                            required: true,
+                            message: "Please confirm your password",
+                          },
                           ({ getFieldValue }) => ({
                             validator(_, value) {
-                              if (!value || getFieldValue("password") === value) {
+                              if (
+                                !value ||
+                                getFieldValue("password") === value
+                              ) {
                                 return Promise.resolve();
                               }
-                              return Promise.reject(new Error("Passwords do not match"));
+                              return Promise.reject(
+                                new Error("Passwords do not match"),
+                              );
                             },
                           }),
                         ]}
                       >
-                        <Input.Password prefix={<LockOutlined />} placeholder="Re-enter password" />
+                        <Input.Password
+                          prefix={<LockOutlined />}
+                          placeholder="Re-enter password"
+                        />
                       </Form.Item>
 
                       <Button

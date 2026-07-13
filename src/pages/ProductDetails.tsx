@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Button, InputNumber, Rate, message, Image } from "antd";
-import { ShoppingCartOutlined, LeftOutlined, ZoomInOutlined } from "@ant-design/icons";
+import {
+  ShoppingCartOutlined,
+  LeftOutlined,
+  ZoomInOutlined,
+} from "@ant-design/icons";
+import { motion } from "framer-motion";
 
 import { useProduct } from "../hooks/useProduct";
 import { useCart } from "../hooks/useCart";
 import RelatedProducts from "../components/product/RelatedProducts";
+import { fadeUp, scaleIn } from "../lib/motion";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -33,7 +39,9 @@ function ProductDetails() {
   }
 
   if (error) {
-    return <h1 className="text-ink-primary p-8 text-xl">Error loading product</h1>;
+    return (
+      <h1 className="text-ink-primary p-8 text-xl">Error loading product</h1>
+    );
   }
 
   if (!product) {
@@ -55,7 +63,12 @@ function ProductDetails() {
       </Link>
 
       <div className="surface-card border-surface grid gap-8 rounded-xl border p-6 md:grid-cols-2 md:p-8">
-       <div className="surface-inset group relative mx-auto flex aspect-square w-full max-h-130  max-w-130 items-center justify-center rounded-lg p-8">
+        <motion.div
+          className="surface-inset group relative mx-auto flex aspect-square w-full max-h-130  max-w-130 items-center justify-center rounded-lg p-8"
+          initial="hidden"
+          animate="visible"
+          variants={scaleIn}
+        >
           <Image
             src={product.image}
             alt={product.title}
@@ -68,9 +81,14 @@ function ProductDetails() {
               ),
             }}
           />
-        </div>
+        </motion.div>
 
-        <div className="flex flex-col justify-center">
+        <motion.div
+          className="flex flex-col justify-center"
+          initial="hidden"
+          animate="visible"
+          variants={fadeUp}
+        >
           <span className="text-brand-accent text-xs font-semibold uppercase tracking-wide">
             {product.category}
           </span>
@@ -80,7 +98,12 @@ function ProductDetails() {
           </h1>
 
           <div className="mt-2 flex items-center gap-2">
-            <Rate disabled allowHalf defaultValue={product.rating.rate} className="text-sm! text-accent-500!" />
+            <Rate
+              disabled
+              allowHalf
+              defaultValue={product.rating.rate}
+              className="text-sm! text-accent-500!"
+            />
             <span className="text-sm text-ink-400">
               {product.rating.rate} ({product.rating.count} ratings)
             </span>
@@ -94,7 +117,7 @@ function ProductDetails() {
             {product.description}
           </p>
 
-          <div className="mt-6 flex items-center gap-4">
+          <div className="mt-6 flex flex-wrap items-center gap-4">
             <InputNumber
               min={1}
               max={99}
@@ -108,14 +131,17 @@ function ProductDetails() {
               size="large"
               icon={<ShoppingCartOutlined />}
               onClick={handleAddToCart}
-              className="flex-1"
+              className="flex-1 min-w-40"
             >
               Add to Cart
             </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
-       <RelatedProducts category={product.category} currentProductId={product.id} />
+      <RelatedProducts
+        category={product.category}
+        currentProductId={product.id}
+      />
     </div>
   );
 }
