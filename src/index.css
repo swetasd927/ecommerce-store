@@ -164,6 +164,50 @@ body {
   @apply border-surface text-ink-secondary border-t text-sm;
 }
 
+
+/* --- Toast (antd notification) --- */
+.ant-notification-notice.app-toast {
+  width: auto;
+  max-width: 420px;
+  min-width: 280px;
+  padding: 0.75rem 2.75rem 0.75rem 1rem;
+  border-radius: var(--radius-theme);
+  color: #ffffff;
+  overflow: hidden;
+  box-shadow:
+    var(--shadow-theme),
+    0 14px 32px rgba(15, 23, 42, 0.22);
+}
+
+.app-toast .ant-notification-notice-message {
+  margin: 0;
+  padding-inline-start: 1.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.app-toast .ant-notification-notice-icon {
+  font-size: 1.1rem;
+  color: #ffffff;
+  margin-top: 0.15rem;
+}
+
+.app-toast .ant-notification-notice-close {
+  top: 0.875rem;
+  inset-inline-end: 0.875rem;
+  color: rgba(255, 255, 255, 0.85);
+}
+.app-toast .ant-notification-notice-close:hover {
+  color: #ffffff;
+}
+
+.app-toast-success { background: linear-gradient(135deg, var(--color-success-500), var(--color-success-600)); }
+.app-toast-error   { background: linear-gradient(135deg, var(--color-danger-500), var(--color-danger-600)); }
+.app-toast-warning { background: linear-gradient(135deg, var(--color-warning-500), var(--color-warning-600)); }
+.app-toast-info    { background: linear-gradient(135deg, var(--color-brand-500), var(--color-brand-600)); }
+
 h1,
 h2,
 h3,

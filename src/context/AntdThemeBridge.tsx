@@ -1,11 +1,15 @@
-import type { ReactNode } from "react";
-import { ConfigProvider, theme as antdTheme } from "antd";
+import { useEffect, type ReactNode } from "react";
+import { ConfigProvider, message, theme as antdTheme } from "antd";
 
 import { useTheme } from "../hooks/useTheme";
 
 function AntdThemeBridge({ children }: { children: ReactNode }) {
   const { theme } = useTheme();
   const isDark = theme === "dark";
+
+  useEffect(() => {
+    message.config({ top: 84, duration: 2.5, maxCount: 3 });
+  }, []);
 
   return (
     <ConfigProvider
